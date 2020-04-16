@@ -1,39 +1,25 @@
 <template>
   <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        order_pizza
-      </h1>
-      <h2 class="subtitle">
-        test-task for innoscripta
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+    <NavBar/>
+    <OrderWidget/>
+    <PizzasList/>
   </div>
 </template>
 
 <script>
 import Logo from '~/components/Logo.vue'
+import OrderWidget from '~/components/OrderWidget/OrderWidget.vue'
+import PizzasList from '~/components/PizzasList/PizzasList.vue'
+import NavBar from '~/components/NavBar/NavBar.vue'
+
+
 
 export default {
   components: {
-    Logo
+    Logo,
+    OrderWidget,
+    PizzasList,
+    NavBar,
   }
 }
 </script>
@@ -43,7 +29,7 @@ export default {
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
 }
