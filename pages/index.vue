@@ -32,6 +32,7 @@ export default {
   justify-content: flex-start;
   align-items: center;
   text-align: center;
+  background: #f8f8f8;
 }
 
 .title {

@@ -16,11 +16,15 @@
       </ul>
     </div>
     <div v-else class="main-view">
-      <label for="city-option">{{ City }}</label>
-      <select name="city" id="city-option" class="region">
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-      </select>
+      <div class="city_block">
+        <label for="city-option">{{ City }}</label>
+        <select v-model="City" name="city" id="city-option" class="region">
+          <option value="Munich">Munich</option>
+          <option value="Berlin">Berlin</option>
+          <option value="Frankfurt">Frankfurt</option>
+        </select>
+      </div>
+
       <div class="menu-list">
         <ul>
           <a href=""><li>Menu</li></a> <!-- what anchor if we are in the other component???-->
@@ -29,7 +33,7 @@
           <a href=""><li>Contact us</li></a>
         </ul>
       </div>
-      <div class="phone-number"></div>
+      <div class="phone-number">015 99-1234567</div>
     </div>
     <button @click="showMainView" class="change-navbar-appearance">Change View</button>
     <div class="language-option">
@@ -45,14 +49,19 @@
     data() {
       return {
         showMenu: false,
-        City: "Munich"
+        City: "Munich",
       }
     },
     methods: {
       showMainView: function() {
         this.showMenu = !this.showMenu;
         console.log("showed");
-      }
+      },
+      // showOptedCity: function() {
+      //   console.log('worked')
+      //   let selectVal = document.querySelector('city-option');
+      //   console.log(selectVal.value);
+      // }
     }
   }
 </script>
@@ -67,7 +76,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1;
+    z-index: 2;
     background-color: #fff;
     border-bottom: 1px solid #ededed;
   }
@@ -111,10 +120,26 @@
     line-height: 1.33;
     height: 100%;
   }
+
+  .language-option {
+    margin: 0 35px 0 0;
+  }
+
   .menu-list li:visited {
 
   }
   .change-navbar-appearance {
 
+  }
+  .phone-number {
+    display: flex;
+    align-items: center;
+    min-width: fit-content;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #70544f;
+    line-height: 1.33;
+    height: 100%;
+    margin: 0 30px;
   }
 </style>
