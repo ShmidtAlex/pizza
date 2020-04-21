@@ -5,9 +5,9 @@
                  :addons="pizza.addons"
                  :description="pizza.description"
                  :nutrition="pizza.nutrition"
-                 :pastryType="pizza.types.default"
-                 :size="pizza.sizes.default"
-                 :price="pizza.prices.default"
+                 :pastryType="pizza.types"
+                 :sizes="pizza.sizes"
+                 :prices="pizza.prices"
                  :img="pizza.imgSrc"
       />
     </div>
@@ -53,7 +53,7 @@
     },
     {
       name: 'Chicken blue cheese',
-      addons: 'chicken breast',
+      addons: ['chicken breast'],
       description: 'Perfect combination: tender chicken fillet with blue cheese crumbles, Parmeggiano sauce, mix of Italian cheeses and Mozzarella cheese.',
       nutrition: {
         title: 'Nutrition information per 100g', protein: 13, fats: 13, carbohydrates: 36, energy: [310, 1300]
@@ -144,8 +144,9 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
+    padding-top: 100px;
   }
   .pizza-sort {
-    margin: 100px 0 0 0;
+    margin: 10px 0 0 0;
   }
 </style>

@@ -1,27 +1,52 @@
 <template>
   <div class="pizza-unit" >
+    <div class="appeared-addons">
+      <Addons :isShown="showAddons" :addons="addons" @updateShowAddonsStatus="updateShowAddons"/>
+    </div>
     <div class="pizza-picture" :style="`background-image: url(${img})`">
         <img :alt="name" :src="img">
-        <div class="addon-list-wrapper">
-          <button class="addon-list">
+        <div v-if="addons.length"class="addon-list-wrapper">
+          <button @click="showAddonInUnit" class="addon-list">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 16 12">
               <path fill="currentColor" fill-rule="evenodd" d="M1 0h14a1 1 0 0 1 0 2H1a1 1 0 0 1 0-2zm2 5h10a1 1 0 0 1 0 2H3a1 1 0 0 1 0-2zm2 5h6a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2z"></path>
             </svg>
           </button>
         </div>
-        <div class="addons" v-if="showAddons">{{addons}}</div>
+
       </div>
     <div class="information-block">
-      <div class="name">{{name}}</div>
+      <div class="up-block">
+        <div class="name">{{ name }}</div>
+        <button class="nutritions" ><span class="nutrition-button"><i>i</i></span></button>
+      </div>
 
-      <div class="description">{{description}}</div>
-      <div class="nutrition" v-if="showNutritions">{{nutrition}}</div>
+
+      <div class="description">{{ description }}</div>
+      <div class="nutrition" v-if="showNutritions">{{ nutrition }}</div>
       <div class="down-block">
-        <div class="pastry-type">{{pastryType}}</div>
-        <div class="sizes">{{size}} cm</div>
+        <div class="pastry-type">
+          <div v-for="type in pastryType" class="pastry-type-next"
+               :class="{'pastry-type-only': Object.keys(pastryType).length === 1,
+               'pastry-type-default': type === 'Traditional'}">
+            {{ type }}
+          </div>
+        </div>
+        <div class="sizes">
+          <div class="pastry-type-next" v-for="(size, index) in sizes"
+               :class="{'pastry-type-only': Object.keys(sizes).length === 1,
+               'pastry-type-default': Object.keys(sizes).indexOf(index) === sizeIndexValue &&  Object.keys(sizes).length > 1}" >
+            {{ size }} cm
+          </div>
+        </div>
         <div class="price-block">
           <button class="add-to-cart">Add to cart</button>
-          <div class="price">{{price}} &euro;</div>
+          <div class="price">
+            <div class="" v-for="(price, index) in prices">
+              <div v-if="Object.keys(prices).indexOf(index) === priceIndexValue">
+                {{price}} &euro;
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -29,20 +54,38 @@
   </div>
 </template>
 <script>
+  import Addons from '~/components/Addons/Addons.vue'
+
 export default {
-  props: ['name', 'addons', 'description', 'nutrition', 'pastryType', 'size', 'price', 'img'],
+  components: {
+    Addons
+  },
+  props: ['name', 'addons', 'description', 'nutrition', 'pastryType', 'sizes', 'prices', 'img'],
   data() {
     return {
       showAddons: false,
       showNutritions: false,
+      sizeIndexValue: 0,
+      priceIndexValue: 0,
     }
   },
   mounted() {
     console.log(this.img)
+  },
+  methods: {
+    showAddonInUnit: function () {
+        this.showAddons = true;
+    },
+    updateShowAddons: function (value) {
+        this.showAddons = value;
+    }
   }
 }
 </script>
 <style scoped>
+  button {
+    outline: none;
+  }
   .pizza-unit {
     /*height: 300px;*/
     width: 300px;
@@ -98,13 +141,20 @@ export default {
     bottom: -16px;
     left: -16px;
   }
+  .appeared-addons {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
   .information-block {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
     width: 90%;
-    height: 190px;
+    height: 266px;
   }
   .name {
     display: flex;
@@ -127,14 +177,107 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    border: 1px solid pink;
     width: 100%;
+    margin: 0 0 20px 0;
   }
   .price-block {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+  }
+  .price {
+    color: #70544f;
+    position: relative;
+    display: inline-block;
+    font-family: Gotham Pro,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+    font-weight: 500;
+    line-height: 1;
+    font-size: 24px;
+  }
+  .add-to-cart {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    height: 48px;
+    padding: 15px 25px;
+    border-radius: 24px;
+    background-color: #009471;
+    border: none;
+    color: #fff;
+    font-family: Gotham Pro,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .pastry-type, .sizes {
+    height: 30px;
+    margin: 3px;
+  }
+  .pastry-type,
+  .sizes {
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    height: 36px;
+    border-radius: 100px;
+    border: 1px solid #ededed;
+    display: flex;
+    flex-direction: row;
     align-items: center;
     width: 100%;
   }
+  .pastry-type-next {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    align-items: center;
+    color: #a69895;
+  }
+  .pastry-type-only {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: #ededed;
+    color: #70544f;
+    cursor: default;
+    border-radius: 30px;
+  }
+  .pastry-type-default {
+    background-color: #ededed;
+    color: #70544f;
+    cursor: default;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+  }
+  .up-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 100%;
+  }
+  .nutritions {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    border: none;
+    background: lightgray;
+    height: 18px;
+    border-radius: 15px;
+  }
+  .nutritions:active {
+    background-color: rgba(255,255,255, 0);
+  }
+
+
 
 </style>
