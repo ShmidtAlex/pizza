@@ -48,7 +48,7 @@
         </div>
         <!--   it would be better to create as a separate component -->
         <div class="price-block">
-          <button class="add-to-cart">Add to cart</button>
+          <button @click="collapsePizzasList" class="add-to-cart">Add to cart</button>
           <div class="price">
             <div class="" v-for="(price, index) in prices">
               <div v-if="Object.keys(prices).indexOf(index) === priceIndexValue">
@@ -104,6 +104,10 @@ export default {
       setTimeout(() => {
         this.isNutritionsShown = false;
       },4000)
+    },
+    collapsePizzasList: function() {
+      console.log('worked');
+      this.$emit('collapseSection', true);
     }
   }
 }

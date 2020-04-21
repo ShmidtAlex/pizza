@@ -1,5 +1,5 @@
 <template>
-  <div class="pizzas-list-container">
+  <div class="pizzas-list-container" :class="{'pizzas-list-container_collapsed': collapsed}">
     <div class="pizza-sort" v-for="pizza in pizzaList">
       <PizzaUnit :name="pizza.name"
                  :addons="pizza.addons"
@@ -9,6 +9,7 @@
                  :sizes="pizza.sizes"
                  :prices="pizza.prices"
                  :img="pizza.imgSrc"
+                 @collapseSection="collapsePizzasListSection"
       />
     </div>
   </div>
@@ -129,14 +130,21 @@
     },
     data() {
       return {
-        pizzaList: pizzasData
+        pizzaList: pizzasData,
+        collapsed: false,
+      }
+    },
+    methods: {
+      collapsePizzasListSection: function(value) {
+        console.log(value);
+        this.collapsed = value;
       }
     }
   }
 </script>
 <style scoped>
   .pizzas-list-container {
-    width: 60%;
+    width: 100%;
     height: 100%;
     min-height: fit-content;
     border: 1px solid pink;
@@ -145,6 +153,9 @@
     flex-wrap: wrap;
     justify-content: space-around;
     padding-top: 100px;
+  }
+  .pizzas-list-container_collapsed {
+      width: 60%;
   }
   .pizza-sort {
     margin: 10px 0 0 0;
