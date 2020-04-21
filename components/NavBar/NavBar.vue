@@ -76,7 +76,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 3;
     background-color: #fff;
     border-bottom: 1px solid #ededed;
   }

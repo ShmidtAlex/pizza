@@ -1,6 +1,6 @@
 <template>
   <div class="pizza-unit" >
-    <div class="appeared-addons">
+    <div v-if="showAddons" class="appeared-addons">
       <Addons :isShown="showAddons" :addons="addons" @updateShowAddonsStatus="updateShowAddons"/>
     </div>
     <div class="pizza-picture" :style="`background-image: url(${img})`">
@@ -17,33 +17,42 @@
     <div class="information-block">
       <div class="up-block">
         <div class="name">{{ name }}</div>
-        <button class="nutritions" ><span class="nutrition-button"><i>i</i></span></button>
+        <button @click="showNutritions" class="nutritions" ><span class="nutrition-button"><i>i</i></span></button>
       </div>
 
 
       <div class="description">{{ description }}</div>
-      <div class="nutrition" v-if="showNutritions">{{ nutrition }}</div>
+      <div class="nutrition" :class="{'nutrition-shown': isNutritionsShown }">
+        <div class="nut-title"><h4>{{ nutrition.title }}</h4></div>
+        <div class="nut-protein"><span>protein: </span><span>{{ nutrition.protein }}</span></div>
+        <div class="nut-fats"><span>fats:</span> <span>{{ nutrition.fats }}</span></div>
+        <div class="nut-carbo"><span>carbohydrates:</span> <span>{{ nutrition.carbohydrates }}</span></div>
+        <div class="nut-energy"><span>energy:</span> <span>{{ nutrition.energy[0] }}/{{ nutrition.energy[1] }}</span></div>
+      </div>
       <div class="down-block">
+    <!--  it would be better to create as a separate component -->
         <div class="pastry-type">
-          <div v-for="type in pastryType" class="pastry-type-next"
+          <div @click="changeType(type)" v-for="type in pastryType" class="pastry-type-next"
                :class="{'pastry-type-only': Object.keys(pastryType).length === 1,
-               'pastry-type-default': type === 'Traditional'}">
+               'pastry-type-default': type === optedType && Object.keys(pastryType).length > 1}">
             {{ type }}
           </div>
         </div>
+        <!--   it would be better to create as a separate component -->
         <div class="sizes">
-          <div class="pastry-type-next" v-for="(size, index) in sizes"
+          <div @click="changeSize(Object.keys(sizes).indexOf(index))" class="pastry-type-next" v-for="(size, index) in sizes"
                :class="{'pastry-type-only': Object.keys(sizes).length === 1,
                'pastry-type-default': Object.keys(sizes).indexOf(index) === sizeIndexValue &&  Object.keys(sizes).length > 1}" >
             {{ size }} cm
           </div>
         </div>
+        <!--   it would be better to create as a separate component -->
         <div class="price-block">
           <button class="add-to-cart">Add to cart</button>
           <div class="price">
             <div class="" v-for="(price, index) in prices">
               <div v-if="Object.keys(prices).indexOf(index) === priceIndexValue">
-                {{price}} &euro;
+                {{ price }} &euro;
               </div>
             </div>
           </div>
@@ -64,9 +73,10 @@ export default {
   data() {
     return {
       showAddons: false,
-      showNutritions: false,
+      isNutritionsShown: false,
       sizeIndexValue: 0,
       priceIndexValue: 0,
+      optedType: 'Traditional',
     }
   },
   mounted() {
@@ -78,6 +88,22 @@ export default {
     },
     updateShowAddons: function (value) {
         this.showAddons = value;
+    },
+    changeType: function (value) {
+      this.optedType = value;
+    // and also it should change the value in stored object (vuex)
+    },
+    changeSize: function(value) {
+      this.sizeIndexValue = value;
+      this.priceIndexValue = value;
+      // and also it should change the value in stored object (vuex)
+      //and should change the price
+    },
+    showNutritions: function() {
+      this.isNutritionsShown = true;
+      setTimeout(() => {
+        this.isNutritionsShown = false;
+      },4000)
     }
   }
 }
@@ -155,6 +181,7 @@ export default {
     align-items: flex-start;
     width: 90%;
     height: 266px;
+    position: relative;
   }
   .name {
     display: flex;
@@ -276,6 +303,41 @@ export default {
   }
   .nutritions:active {
     background-color: rgba(255,255,255, 0);
+  }
+  .nutrition {
+    position: absolute;
+    bottom: 100%;
+    left: 13px;
+    width: 248px;
+    height: 200px;
+    padding: 16px;
+    margin-bottom: 13px;
+    border-radius: 6px;
+    background-color: #70544f;
+    color: #fff;
+    z-index: 2;
+    opacity: 0;
+    -webkit-transition: opacity .175s;
+    transition: opacity .175s;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+  }
+  .nutrition-shown {
+    opacity: 1;
+  }
+  .nut-title {
+    margin: 0 0 15px 0;
+  }
+  .nut-title,
+  .nut-carbo,
+  .nut-energy,
+  .nut-fats,
+  .nut-protein {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
   }
 
 
