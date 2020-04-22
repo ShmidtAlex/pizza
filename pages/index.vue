@@ -1,8 +1,11 @@
 <template>
   <div class="container">
     <NavBar/>
-    <OrderWidget/>
-    <PizzasList/>
+    <PizzasList @getCartState="collapsPizzasList"/>
+    <div class="hidden" :class="{'order-widget': pizzasListCollapsed }">
+      <OrderWidget />
+    </div>
+
   </div>
 </template>
 
@@ -19,7 +22,17 @@ export default {
     Logo,
     OrderWidget,
     PizzasList,
-    NavBar,
+    NavBar
+  },
+  data() {
+    return {
+      pizzasListCollapsed: false,
+    }
+  },
+  methods: {
+    collapsPizzasList: function (value) {
+      this.pizzasListCollapsed = true;
+    }
   }
 }
 </script>
@@ -33,6 +46,17 @@ export default {
   align-items: center;
   text-align: center;
   background: #f8f8f8;
+}
+.hidden {
+  display: none;
+}
+.order-widget {
+  position: relative;
+  width: 40%;
+  height: 400px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .title {

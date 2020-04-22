@@ -70,7 +70,8 @@
       description: 'Classic favorite recipe: crispy bacon, cream cheese, juicy tomatoes, onions, Mozzarella and Italian herbs blend.\n',
       nutrition: {
         title: 'Nutrition information per 100g', protein: 11, fats: 8, carbohydrates: 35, energy: [260, 1090]
-      },      types: { default: 'Traditional', thin: 'Thin'},
+      },
+      types: { default: 'Traditional', thin: 'Thin'},
       sizes: { default: 23, mid: 30, midPlus: 35, large: 40 },
       prices: { default:  5, mid: 7, midPlus: 9, large: 11 },
       imgSrc: '/carbonara.png'
@@ -138,6 +139,7 @@
       collapsePizzasListSection: function(value) {
         console.log(value);
         this.collapsed = value;
+        this.$emit('getCartState', true)
       }
     }
   }
@@ -147,7 +149,6 @@
     width: 100%;
     height: 100%;
     min-height: fit-content;
-    border: 1px solid pink;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

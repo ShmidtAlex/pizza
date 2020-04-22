@@ -311,7 +311,7 @@ export default {
   .nutrition {
     position: absolute;
     bottom: 100%;
-    left: 13px;
+    left: -13px;
     width: 248px;
     height: 200px;
     padding: 16px;
