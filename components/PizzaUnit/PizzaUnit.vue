@@ -1,7 +1,7 @@
 <template>
   <div class="pizza-unit" >
     <div v-if="showAddons" class="appeared-addons">
-      <Addons :isShown="showAddons" :addons="addons" @updateShowAddonsStatus="updateShowAddons"/>
+      <Addons :isShown="showAddons" :addons="addons" @returnIng="returnIngredient" @removeIng="removeIngredient" @updateShowAddonsStatus="updateShowAddons"/>
     </div>
     <div class="pizza-picture" :style="`background-image: url(${img})`">
         <img :alt="name" :src="img">
@@ -40,7 +40,7 @@
         </div>
         <!--   it would be better to create as a separate component -->
         <div class="sizes">
-          <div @click="changeSize(Object.keys(sizes).indexOf(index))" class="pastry-type-next" v-for="(size, index) in sizes"
+          <div @click="changeSize(Object.keys(sizes).indexOf(index),size)" class="pastry-type-next" v-for="(size, index) in sizes"
                :class="{'pastry-type-only': Object.keys(sizes).length === 1,
                'pastry-type-default': Object.keys(sizes).indexOf(index) === sizeIndexValue &&  Object.keys(sizes).length > 1}" >
             {{ size }} cm
@@ -64,7 +64,6 @@
 </template>
 <script>
   import Addons from '~/components/Addons/Addons.vue'
-
 export default {
   components: {
     Addons
@@ -77,6 +76,16 @@ export default {
       sizeIndexValue: 0,
       priceIndexValue: 0,
       optedType: 'Traditional',
+      finalObject: {
+        pizzaName: this.name,
+        pizzaSize: this.sizes.default,
+        pizzaType: this.pastryType.default,
+        extraAddons: [],
+        excludedIngridients: [],
+        quantity: 1,
+        totalPrice: this.prices.default,
+        smallImg: ''
+      }
     }
   },
   mounted() {
@@ -86,28 +95,57 @@ export default {
     showAddonInUnit: function () {
         this.showAddons = true;
     },
+
     updateShowAddons: function (value) {
         this.showAddons = value;
     },
+
     changeType: function (value) {
       this.optedType = value;
-    // and also it should change the value in stored object (vuex)
+      this.finalObject.pizzaType = value;
     },
-    changeSize: function(value) {
+
+    changeSize: function(value, size) {
       this.sizeIndexValue = value;
       this.priceIndexValue = value;
-      // and also it should change the value in stored object (vuex)
-      //and should change the price
+      this.finalObject.pizzaSize = size;
+      this.changePrice(value);
     },
+
+    changePrice: function(index) {
+      let localKey = Object.keys(this.prices)[index];
+      this.finalObject.totalPrice = this.prices[localKey];
+    },
+
     showNutritions: function() {
       this.isNutritionsShown = true;
       setTimeout(() => {
         this.isNutritionsShown = false;
       },4000)
     },
+
     collapsePizzasList: function() {
       console.log('worked');
       this.$emit('collapseSection', true);
+      this.addPizzaToCart();
+    },
+
+    removeIngredient: function (value) {
+        this.finalObject.excludedIngridients.push(value);
+    },
+
+    returnIngredient: function (value) {
+      this.finalObject.excludedIngridients = this.finalObject.excludedIngridients.filter(ingr => ingr !== value)
+    },
+
+    addPizzaToCart: function() {
+      console.log(this)
+      this.$store.commit('order/add', this.mainObject);
+    }
+  },
+  computed: {
+    mainObject: function() {
+      return this.finalObject;
     }
   }
 }
@@ -259,6 +297,7 @@ export default {
     flex-direction: row;
     align-items: center;
     width: 100%;
+    cursor: pointer;
   }
   .pastry-type-next {
     display: flex;
@@ -267,6 +306,7 @@ export default {
     height: 100%;
     align-items: center;
     color: #a69895;
+    cursor: pointer;
   }
   .pastry-type-only {
     display: flex;
@@ -274,19 +314,19 @@ export default {
     width: 100%;
     background-color: #ededed;
     color: #70544f;
-    cursor: default;
     border-radius: 30px;
+    cursor: pointer;
   }
   .pastry-type-default {
     background-color: #ededed;
     color: #70544f;
-    cursor: default;
     height: 100%;
     width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 30px;
+    cursor: pointer;
   }
   .up-block {
     display: flex;

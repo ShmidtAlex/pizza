@@ -48,7 +48,9 @@
           <div class="total-text">Total:</div>
           <div class="total-amount">{{totalAmount}} &euro;</div>
         </div>
-        <button class="order-now">Order Now</button>
+        <div class="order-now-section">
+          <button class="order-now">Order Now</button>
+        </div>
       </div>
     </div>
   </div>
@@ -209,9 +211,18 @@
     align-items: center;
     width: 100%;
   }
+  .order-now-section {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    height: 50%;
+    align-items: flex-end;
+  }
   .order-now {
     position: relative;
-    display: inline-block;
+    display: flex;
+    flex-direction: row;
     vertical-align: middle;
     height: 48px;
     padding: 15px 25px;
@@ -226,6 +237,7 @@
     cursor: pointer;
     margin: 20px;
     font-size: 16px;
+    outline: none;
   }
 
 </style>

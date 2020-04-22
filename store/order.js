@@ -1,7 +1,6 @@
-export const  state = () => ({
-  orderList: [
 
-  ]
+export const  state = () => ({
+  orderList: []
 })
 
 //one order layout:
@@ -9,7 +8,7 @@ export const  state = () => ({
 order: {
   orderId: number, //should be unic for each user
   pizzasList: [
-      {
+      {//equal to finalObject
         pizzaName: 'brusketta',
         pizzaSize: 'default/mid/midPlus/large',
         pizzaType: 'default(traditional)/thin',
@@ -26,3 +25,14 @@ order: {
   ]
 }
  */
+export const mutations = {
+  add (state, text) {
+    state.list.push({
+      text,
+      done: false
+    })
+  },
+  remove (state, { todo }) {
+    state.list.splice(state.list.indexOf(todo), 1)
+  }
+}

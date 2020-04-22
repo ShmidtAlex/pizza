@@ -3,11 +3,14 @@
     <div class="addons" >
       <h3>Remove ingredients</h3>
       <div class="addon" v-for="addon in addons">
-        <div>{{ addon }}</div>
-        <div class="remove-button">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 14 14">
+        <div :class="{'removed-addons': removed.includes(addon)}">{{ addon }}</div>
+        <div @click="removeIngredient(addon)" class="remove-button" :class="{'removed-addons': removed.includes(addon)}">
+          <svg v-if="!removed.includes(addon)" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 14 14">
             <path fill="currentColor" fill-rule="evenodd"
                   d="M8.41 7l4.95 4.95-1.41 1.41L7 8.41l-4.95 4.95-1.41-1.41L5.59 7 .64 2.05 2.05.64 7 5.59 11.95.64l1.41 1.41L8.41 7z"></path>
+          </svg>
+          <svg v-else xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+            <path d="M3.74 10.3a4.5 4.5 0 1 0 .94-4.98M4.6 1.85L3.5 5.9l4.03 1.22" fill="none" fill-rule="evenodd" stroke="currentColor" stroke-width="2"></path>
           </svg>
         </div>
       </div>
@@ -35,7 +38,8 @@
     props: ['isShown', 'addons'],
     data() {
       return {
-        localAddons: null
+        localAddons: null,
+        removedAddons: []
       }
     },
     mounted() {
@@ -43,7 +47,25 @@
     },
     methods: {
       hideAddons: function() {
-        this.$emit('updateShowAddonsStatus', false)
+        this.$emit('updateShowAddonsStatus', false);
+        this.canselChanges();
+      },
+      removeIngredient: function (value) {
+        if(!this.removedAddons.includes(value)){
+          this.$emit('removeIng', value);
+          this.removedAddons.push(value);
+        } else {
+          this.$emit('returnIng', value)
+          this.removedAddons = this.removedAddons.filter(elem => elem !== value);
+        }
+      },
+      canselChanges: function() {
+        this.removedAddons = [];
+      }
+    },
+    computed: {
+      removed: function () {
+        return this.removedAddons;
       }
     }
   }
@@ -76,7 +98,10 @@
     color: #70544f;
     font-size: 18px;
   }
-
+  .removed-addons {
+    color: rgba(112, 84, 79, .5);
+    text-decoration: line-through;
+  }
   .addon {
     display: flex;
     flex-direction: row;

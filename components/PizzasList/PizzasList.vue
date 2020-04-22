@@ -125,6 +125,7 @@
     }
   ]
   import PizzaUnit from '../PizzaUnit/PizzaUnit.vue';
+  import { mapMutations } from 'vuex';
   export default {
     components: {
       PizzaUnit,
@@ -140,7 +141,10 @@
         console.log(value);
         this.collapsed = value;
         this.$emit('getCartState', true)
-      }
+      },
+      ...mapMutations({
+        add: 'order/add'
+      })
     }
   }
 </script>
