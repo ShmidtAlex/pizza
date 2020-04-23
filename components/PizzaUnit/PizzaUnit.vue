@@ -1,7 +1,11 @@
 <template>
   <div class="pizza-unit" >
     <div v-if="showAddons" class="appeared-addons">
-      <Addons :isShown="showAddons" :addons="addons" @returnIng="returnIngredient" @removeIng="removeIngredient" @updateShowAddonsStatus="updateShowAddons"/>
+      <Addons :objectForIngredientManipulations="finalObject"
+              :isShown="showAddons"
+              :addons="addons"
+              @updateShowAddonsStatus="updateShowAddons"
+              @collapsePizzasList="collapsWithoutAdding"/>
     </div>
     <div class="pizza-picture" :style="`background-image: url(${img})`">
         <img :alt="name" :src="img">
@@ -63,12 +67,13 @@
   </div>
 </template>
 <script>
-  import Addons from '~/components/Addons/Addons.vue'
+  import Addons from '~/components/Addons/Addons.vue';
+  import { mapMutations } from 'vuex';
 export default {
   components: {
     Addons
   },
-  props: ['name', 'addons', 'description', 'nutrition', 'pastryType', 'sizes', 'prices', 'img'],
+  props: ['name', 'addons', 'description', 'nutrition', 'pastryType', 'sizes', 'prices', 'img', 'index'],
   data() {
     return {
       showAddons: false,
@@ -84,12 +89,9 @@ export default {
         excludedIngridients: [],
         quantity: 1,
         totalPrice: this.prices.default,
-        smallImg: ''
+        smallImg: this.img
       }
     }
-  },
-  mounted() {
-    console.log(this.img)
   },
   methods: {
     showAddonInUnit: function () {
@@ -125,21 +127,15 @@ export default {
     },
 
     collapsePizzasList: function() {
-      console.log('worked');
       this.$emit('collapseSection', true);
       this.addPizzaToCart();
     },
 
-    removeIngredient: function (value) {
-        this.finalObject.excludedIngridients.push(value);
-    },
-
-    returnIngredient: function (value) {
-      this.finalObject.excludedIngridients = this.finalObject.excludedIngridients.filter(ingr => ingr !== value)
+    collapsWithoutAdding: function() {
+      this.$emit('collapseSection', true);
     },
 
     addPizzaToCart: function() {
-      console.log(this)
       this.$store.commit('order/add', this.mainObject);
     }
   },

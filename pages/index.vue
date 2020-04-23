@@ -26,12 +26,12 @@ export default {
   },
   data() {
     return {
-      pizzasListCollapsed: false,
+      pizzasListCollapsed: false
     }
   },
   methods: {
     collapsPizzasList: function (value) {
-      this.pizzasListCollapsed = true;
+        this.pizzasListCollapsed = true;
     }
   }
 }

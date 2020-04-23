@@ -13,40 +13,48 @@
         <div class="cart-number">
           <div class="cart-info-line">
             <h3>Cart</h3>
-            <div class="positions-number">({{order.length}})</div>
+            <div class="positions-number">({{ storedObject.length + increasedQuantity }})</div>
             <button @click="showDetails" class="expand-list"></button>
           </div>
-          <button class="clear">Clear</button>
+          <button @click="clearCart" class="clear">Clear</button>
         </div>
-        <div v-show="isDetailsShown" class="cart-details-block">
-          <div class="cart-details">
-            <div class="small-pizza-pic"></div>
-            <div class="pizza-info">
-              <div class="pizza-name">Name</div>
-              <div class="pizza-details">details</div>
-            </div>
-            <div class="remove-button">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 14 14">
-                <path fill="currentColor" fill-rule="evenodd"
-                      d="M8.41 7l4.95 4.95-1.41 1.41L7 8.41l-4.95 4.95-1.41-1.41L5.59 7 .64 2.05 2.05.64 7 5.59 11.95.64l1.41 1.41L8.41 7z"></path>
-              </svg>
-            </div>
-          </div>
-          <div class="cart-details">
-            <div class="change-number-pizzatype">
-              <div class="change">
-                <button class="decrease"></button>
-                <div class="running-number">1</div>
-                <button class="increase"></button>
+        <div class="cart-details-block__wrapper">
+          <div v-show="isDetailsShown" class="cart-details-block" v-for="(unit, unitIndex) in storedObject">
+            <div class="cart-details">
+              <div class="small-pizza-pic">
+                <img class="small-img" :src="unit.text.smallImg" :alt="unit.text.smallImg.match(/^([^.]+)/)">
               </div>
-              <div class="totally-pizzatype">359 &euro;</div>
+              <div class="pizza-info">
+                <div class="pizza-name">{{unit.text.pizzaName}}</div>
+                <div class="pizza-details">
+                  <div v-if="unit.text.excludedIngridients.length"
+                       class="removedIngredients"
+                       v-for="ingredient in unit.text.excludedIngridients"> - {{ingredient}}</div>
+                  {{unit.text.pizzaSize}} cm {{unit.text.pizzaType}}</div>
+              </div>
+              <div @click="removePosition(unitIndex)" class="remove-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 14 14">
+                  <path fill="currentColor" fill-rule="evenodd"
+                        d="M8.41 7l4.95 4.95-1.41 1.41L7 8.41l-4.95 4.95-1.41-1.41L5.59 7 .64 2.05 2.05.64 7 5.59 11.95.64l1.41 1.41L8.41 7z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="cart-details">
+              <div class="change-number-pizzatype">
+                <div class="change">
+                  <div @click="decreaseNumber(unitIndex)" class="decrease" :class="{decrease_active: unit.text.quantity >= 1}">-</div>
+                  <div class="running-number">{{ unit.text.quantity }}</div>
+                  <div  @click="increaseNumber(unitIndex)" class="increase increase-active" >+</div>
+                </div>
+                <div class="totally-pizzatype">{{ unit.text.quantity * unit.text.totalPrice }} &euro;</div>
+              </div>
             </div>
           </div>
-
         </div>
+
         <div class="total-amount-block">
           <div class="total-text">Total:</div>
-          <div class="total-amount">{{totalAmount}} &euro;</div>
+          <div class="total-amount">{{ totalCartAmount }} &euro;</div>
         </div>
         <div class="order-now-section">
           <button class="order-now">Order Now</button>
@@ -59,17 +67,41 @@
   export default {
     data() {
       return {
-        order: ['some order'],
+        storedObject: this.$store.state.order.orderList,
         isDetailsShown: false,
-        totalAmount: 'some number of TA'
+        increasedQuantity: 0,
+        newPrice: null
       }
     },
     methods: {
       showDetails: function () {
-        console.log('click!!');
         this.isDetailsShown = !this.isDetailsShown;
+      },
+      increaseNumber: function(index) {
+        this.$store.commit('order/increaseNumber', index);
+        this.increasedQuantity++;
+      },
+      decreaseNumber: function(index) {
+        this.$store.commit('order/decreaseNumber', index);
+        if(this.increasedQuantity > 0) {
+          this.increasedQuantity--;
+        }
+      },
+      removePosition: function(index) {
+        this.$store.commit('order/remove', index);
+      },
+      clearCart: function() {
+        this.$store.commit('order/clearCart');
+      }
+    },
+    computed: {
+      totalCartAmount: function () {
+        return this.storedObject.reduce(function(acc, elem){
+         return acc + elem.text.totalPrice * elem.text.quantity;
+        },0)
       }
     }
+
   }
 </script>
 <style>
@@ -85,8 +117,9 @@
   }
   .cart-snippet-block {
     width: 100%;
-    height: 90%;
+    min-height: 90%;
     position: relative;
+    height: fit-content;
   }
 
   .cart-snippet-stripe {
@@ -121,7 +154,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 15px;
+    /*padding: 15px;*/
   }
   .cart-number {
     width: 100%;
@@ -130,6 +163,7 @@
     justify-content: space-between;
     align-items: center;
     height: 80px;
+    padding: 15px;
   }
   h3 {
     padding: 0;
@@ -174,12 +208,19 @@
     height: 100%;
     align-items: center;
   }
+  .cart-details-block__wrapper {
+    max-height: 270px;
+    overflow-y: scroll;
+    width: 100%;
+  }
+
   .cart-details-block {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 30%;
     justify-content: space-around;
+    padding: 0 15px;
   }
   .cart-details,
   .change-number-pizzatype {
@@ -187,12 +228,31 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
   }
-  .small-pizza-pic {
-    width: 30px;
+
+  .increase, .decrease {
     height: 20px;
-    border: 1px solid gray;
+    width: 20px;
+    border-radius: 45%;
+    outline: none;
+    position: relative;
+    background-color: rgba(0,0,0, .1);
+    cursor: pointer;
   }
+
+  .increase-active, .decrease_active {
+    border: none;
+    background-color: #e1faf4;
+    color: #009471;
+    text-align: center;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
   .change {
     display: flex;
     flex-direction: row;
@@ -204,12 +264,27 @@
     flex-direction: column;
     align-items: center;
   }
+  .pizza-name {
+    width: 100%;
+    height: 18px;
+    font-size: 11px;
+    font-weight: 700;
+    min-height: fit-content;
+  }
+  .pizza-details {
+    width: 100%;
+    /*height: 45px;*/
+    font-size: 11px;
+    font-weight: 400;
+  }
   .total-amount-block {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    border-top: 1px solid lightgreen;
+    padding: 10px 15px 0 15px;
   }
   .order-now-section {
     display: flex;
@@ -238,6 +313,23 @@
     margin: 20px;
     font-size: 16px;
     outline: none;
+  }
+
+  .small-pizza-pic {
+    position: relative;
+    width: 40px;
+    height: 30px;
+  }
+
+  .small-img {
+    position: absolute;
+    max-width: 100%;
+    height: auto;
+    top: 0;
+    left: 0;
+  }
+  .removedIngredients {
+    color: darkred;
   }
 
 </style>

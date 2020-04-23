@@ -1,6 +1,6 @@
 <template>
   <div class="pizzas-list-container" :class="{'pizzas-list-container_collapsed': collapsed}">
-    <div class="pizza-sort" v-for="pizza in pizzaList">
+    <div class="pizza-sort" v-for="(pizza, indexPizza) in pizzaList">
       <PizzaUnit :name="pizza.name"
                  :addons="pizza.addons"
                  :description="pizza.description"
@@ -9,6 +9,7 @@
                  :sizes="pizza.sizes"
                  :prices="pizza.prices"
                  :img="pizza.imgSrc"
+                 :index="indexPizza"
                  @collapseSection="collapsePizzasListSection"
       />
     </div>
@@ -138,13 +139,9 @@
     },
     methods: {
       collapsePizzasListSection: function(value) {
-        console.log(value);
         this.collapsed = value;
         this.$emit('getCartState', true)
-      },
-      ...mapMutations({
-        add: 'order/add'
-      })
+      }
     }
   }
 </script>

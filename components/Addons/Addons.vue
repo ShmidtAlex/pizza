@@ -27,7 +27,7 @@
         <div class="cansel-block">
           <button @click="hideAddons">Cansel</button>
         </div>
-        <div class="add-to-cart">Add to cart</div>
+        <div @click="addToCartWithChanges" class="add-to-cart">Add to cart</div>
       </div>
     </div>
   </div>
@@ -35,7 +35,7 @@
 </template>
 <script>
   export default {
-    props: ['isShown', 'addons'],
+    props: ['isShown', 'addons', 'objectForIngredientManipulations'],
     data() {
       return {
         localAddons: null,
@@ -52,15 +52,20 @@
       },
       removeIngredient: function (value) {
         if(!this.removedAddons.includes(value)){
-          this.$emit('removeIng', value);
           this.removedAddons.push(value);
         } else {
-          this.$emit('returnIng', value)
           this.removedAddons = this.removedAddons.filter(elem => elem !== value);
         }
       },
       canselChanges: function() {
         this.removedAddons = [];
+      },
+      addToCartWithChanges: function () {
+        this.objectForIngredientManipulations.excludedIngridients = this.removedAddons;
+        this.$store.commit('order/addChangedIngredients', this.objectForIngredientManipulations);
+        this.$emit('collapsePizzasList', true)
+        this.$emit('updateShowAddonsStatus', false);
+        this.canselChanges();
       }
     },
     computed: {
