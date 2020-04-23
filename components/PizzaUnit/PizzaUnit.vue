@@ -1,7 +1,8 @@
 <template>
   <div class="pizza-unit" >
     <div v-if="showAddons" class="appeared-addons">
-      <Addons :objectForIngredientManipulations="finalObject"
+      <Addons
+              :objectForIngredientManipulations="defaultObject"
               :isShown="showAddons"
               :addons="addons"
               @updateShowAddonsStatus="updateShowAddons"
@@ -82,6 +83,16 @@ export default {
       priceIndexValue: 0,
       optedType: 'Traditional',
       finalObject: {
+        pizzaName: this.name,
+        pizzaSize: this.sizes.default,
+        pizzaType: this.pastryType.default,
+        extraAddons: [],
+        excludedIngridients: [],
+        quantity: 1,
+        totalPrice: this.prices.default,
+        smallImg: this.img
+      },
+      defaultObject: {
         pizzaName: this.name,
         pizzaSize: this.sizes.default,
         pizzaType: this.pastryType.default,

@@ -1,6 +1,6 @@
 
 export const  state = () => ({
-  orderList: []
+  orderList: [],
 })
 
 //one order layout:
@@ -25,6 +25,7 @@ order: {
   ]
 }
  */
+
 export const mutations = {
 
   add (state, text) {
