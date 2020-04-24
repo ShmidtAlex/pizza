@@ -5,8 +5,8 @@
     </div>
     <div v-if="showMenu" class="menu-list">
       <ul>
-        <a href=""><li>Pizza</li></a>
-        <a href=""><li>Combo</li></a>
+        <a href="#pizzas"><li>Pizza</li></a>
+        <a href="#combos"><li>Combo</li></a>
         <a href=""><li>Snakes</li></a>
         <a href=""><li>Salads</li></a>
         <a href=""><li>Desserts</li></a>
@@ -35,33 +35,48 @@
       </div>
       <div class="phone-number">015 99-1234567</div>
     </div>
-    <button @click="showMainView" class="change-navbar-appearance">Change View</button>
+    <button @click.stop="showMainView" class="change-navbar-appearance">Change View</button>
     <div class="language-option">
       <select name="" id="languages">
         <option value="GR">GR</option>
         <option value="ENG">ENG</option>
       </select>
     </div>
+    <div class="user-account-section"
+      :class="{'user-section-active': isFormVisible}">
+      <div @click="showSignInForm"
+           class="open-button">
+        Sign In</div>
+        <UserAccount :isActive="isFormVisible"/>
+    </div>
   </div>
 </template>
 <script>
+  import UserAccount from "../UserAccount/UserAccount";
   export default {
+    components: {
+      UserAccount,
+    },
     data() {
       return {
         showMenu: false,
         City: "Munich",
+        isSignInFormShowed: false,
+        change: false
       }
     },
     methods: {
       showMainView: function() {
         this.showMenu = !this.showMenu;
-        console.log("showed");
       },
-      // showOptedCity: function() {
-      //   console.log('worked')
-      //   let selectVal = document.querySelector('city-option');
-      //   console.log(selectVal.value);
-      // }
+      showSignInForm: function() {
+        this.isSignInFormShowed = !this.isSignInFormShowed;
+      }
+    },
+    computed: {
+      isFormVisible: function () {
+        return this.isSignInFormShowed;
+      }
     }
   }
 </script>
@@ -122,15 +137,9 @@
   }
 
   .language-option {
-    margin: 0 35px 0 0;
+    margin: 0 0px 0 0;
   }
 
-  .menu-list li:visited {
-
-  }
-  .change-navbar-appearance {
-
-  }
   .phone-number {
     display: flex;
     align-items: center;
@@ -141,5 +150,25 @@
     line-height: 1.33;
     height: 100%;
     margin: 0 30px;
+  }
+  .user-account-section {
+    position: relative;
+    width: 100px;
+    height: 50px;
+    margin: 0 10px 0 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    color: #006d54;
+    padding: 10px;
+    border-radius: 25px;
+    background-color: whitesmoke;
+    font-weight: 700;
+  }
+  .user-section-active {
+    background-color: #f8f8f8;
+    color: #bfb7b6;
   }
 </style>

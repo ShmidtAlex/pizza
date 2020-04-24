@@ -1,11 +1,14 @@
 <template>
   <div class="container">
     <NavBar/>
-    <PizzasList @getCartState="collapsPizzasList"/>
+    <div class="goods">
+      <PizzasList @getCartState="collapsPizzasList"/>
+      <Combos />
+    </div>
+
     <div class="hidden" :class="{'order-widget': pizzasListCollapsed }">
       <OrderWidget />
     </div>
-
   </div>
 </template>
 
@@ -14,7 +17,7 @@ import Logo from '~/components/Logo.vue'
 import OrderWidget from '~/components/OrderWidget/OrderWidget.vue'
 import PizzasList from '~/components/PizzasList/PizzasList.vue'
 import NavBar from '~/components/NavBar/NavBar.vue'
-
+import Combos from '~/components/Combos/Combos.vue'
 
 
 export default {
@@ -22,7 +25,8 @@ export default {
     Logo,
     OrderWidget,
     PizzasList,
-    NavBar
+    NavBar,
+    Combos,
   },
   data() {
     return {
@@ -79,5 +83,9 @@ export default {
 
 .links {
   padding-top: 15px;
+}
+.goods {
+  width: fit-content;
+  height: fit-content;
 }
 </style>

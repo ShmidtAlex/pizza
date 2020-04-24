@@ -1,5 +1,5 @@
 <template>
-  <div class="pizzas-list-container" :class="{'pizzas-list-container_collapsed': collapsed}">
+  <div id="pizzas" class="pizzas-list-container" :class="{'pizzas-list-container_collapsed': collapsed}">
     <div class="pizza-sort" v-for="(pizza, indexPizza) in pizzaList">
       <PizzaUnit :name="pizza.name"
                  :addons="pizza.addons"

@@ -13,7 +13,7 @@
         <div class="cart-number">
           <div class="cart-info-line">
             <h3>Cart</h3>
-            <div class="positions-number">({{ storedObject.length + increasedQuantity }})</div>
+            <div class="positions-number">({{ actualQuantity }})</div>
             <button @click="showDetails" class="expand-list"></button>
           </div>
           <button @click="clearCart" class="clear">Clear</button>
@@ -70,7 +70,8 @@
         storedObject: this.$store.state.order.orderList,
         isDetailsShown: false,
         increasedQuantity: 0,
-        newPrice: null
+        newPrice: null,
+        cleared: false
       }
     },
     methods: {
@@ -92,6 +93,7 @@
       },
       clearCart: function() {
         this.$store.commit('order/clearCart');
+        this.cleared = true;
       }
     },
     computed: {
@@ -99,6 +101,14 @@
         return this.storedObject.reduce(function(acc, elem){
          return acc + elem.text.totalPrice * elem.text.quantity;
         },0)
+      },
+      actualQuantity: function() {
+        if (this.cleared) {
+          return this.storedObject.length;
+        } else {
+          return this.storedObject.length + this.increasedQuantity;
+        }
+
       }
     }
 
