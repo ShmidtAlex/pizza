@@ -1,5 +1,9 @@
 # order_pizza
 
+## about:
+
+this app is a SPA for ordering pizza. as a prototype used papa Jones.
+
 > test-task for innoscripta
 
 ## Build Setup
