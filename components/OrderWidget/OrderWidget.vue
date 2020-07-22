@@ -119,11 +119,11 @@
     width: 300px;
     height: 400px;
     position: relative;
-    top: 150px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
+    margin-bottom: 70px;
   }
   .cart-snippet-block {
     width: 100%;

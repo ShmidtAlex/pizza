@@ -62,7 +62,6 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  border: 1px solid;
   margin: 110px 0 0 0;
   padding-top: 50px;
 }
