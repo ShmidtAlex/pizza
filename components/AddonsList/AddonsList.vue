@@ -1,10 +1,15 @@
 <template>
   <div class="addons-options-wrapper">
+    <div class="addons-header">
+      <h4>Here you may opt some extra addons</h4>
+      <div><i>(all addons have the same price {{addonPrice}}$)</i></div>
+    </div>      
     <div class="addons-body">
+      
       <div class="addons-list" >
         <div v-for="addon in availiableAddons" class="addons-list-elem">
           {{ addon }} 
-          <div class="addons-list-price">2$</div>
+          <div class="addons-list-price"> {{addonPrice}}$</div>
         </div>       
       </div>
       <div @click="closeAddons()" class="remove-button" >
@@ -25,7 +30,8 @@
     data() {
       return {
         availiableAddons: this.addonsList,
-        optedAddons: []
+        optedAddons: [],
+        addonPrice: 2
       }
     },
     // mounted() {
