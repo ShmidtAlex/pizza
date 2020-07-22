@@ -70,7 +70,6 @@
       },
       showAddonsForOpting: function(event) {
         this.$emit('showAddonsList', true);
-        console.log('work!!!!!!!!!!')
       }
     },
     computed: {

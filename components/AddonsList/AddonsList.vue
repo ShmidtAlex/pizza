@@ -1,7 +1,12 @@
 <template>
   <div class="addons-options-wrapper">
     <div class="addons-body">
-      <div class="addons-list" v-for="addon in availiableAddons"></div>
+      <div class="addons-list" >
+        <div v-for="addon in availiableAddons" class="addons-list-elem">
+          {{ addon }} 
+          <div class="addons-list-price">2$</div>
+        </div>       
+      </div>
       <div @click="closeAddons()" class="remove-button" >
         <svg  xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 14 14">
           <path fill="currentColor" fill-rule="evenodd"
@@ -16,10 +21,10 @@
 </template>
 <script>
   export default {
-    props: [],
+    props: ["addonsList"],
     data() {
       return {
-        availiableAddons: this.$store.state,
+        availiableAddons: this.addonsList,
         optedAddons: []
       }
     },
@@ -28,18 +33,11 @@
     // },
     methods: {
         closeAddons: function() {
-          console.log("closeAddons")
           this.$emit('closeAddonsList', false);
         }
-    //   addToCartWithChanges: function () {
-    //     this.objectForIngredientManipulations.excludedIngridients = this.removedAddons;
-    //     this.$store.commit('order/addChangedIngredients', this.objectForIngredientManipulations);
-    //     this.$emit('collapsePizzasList', true)
-    //     this.$emit('updateShowAddonsStatus', false);
-    //     this.canselChanges();
-    //   }
-    // },
-    // computed: {
+    
+    },
+    computed: {
     //   removed: function () {
     //     return this.removedAddons;
     //   }
@@ -76,6 +74,17 @@
   .addons-list {
     width: 1000px;
     height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+  }
+  
+  .addons-list-elem {    
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    height: 40px;
   }
 
   .remove-button {

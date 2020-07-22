@@ -66,7 +66,7 @@
       </div>
     </div>
     <div class="addonOptions" :class="{showedAddons: showAddonOptions}">
-      <AddonsList @closeAddonsList="showFeature"/>
+      <AddonsList :addonsList="addons" @closeAddonsList="showFeature"/>
     </div>
      
   </div>
@@ -159,7 +159,6 @@ export default {
     },
 
     showFeature: function(value) {
-      console.log(this.showAddonOptions, value);
       this.showAddonOptions = value;
     }
   },
