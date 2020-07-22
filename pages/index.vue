@@ -3,7 +3,7 @@
     <NavBar/>
     <div class="goods">
       <PizzasList @getCartState="collapsPizzasList"/>
-      <Combos />
+      <Combos />     
     </div>
 
     <div class="hidden" :class="{'order-widget': pizzasListCollapsed }">
@@ -21,14 +21,13 @@ import PizzasList from '~/components/PizzasList/PizzasList.vue'
 import NavBar from '~/components/NavBar/NavBar.vue'
 import Combos from '~/components/Combos/Combos.vue'
 
-
 export default {
   components: {
     Logo,
     OrderWidget,
     PizzasList,
     NavBar,
-    Combos,
+    Combos
   },
   data() {
     return {

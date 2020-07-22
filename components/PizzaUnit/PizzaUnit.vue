@@ -6,7 +6,8 @@
               :isShown="showAddons"
               :addons="addons"
               @updateShowAddonsStatus="updateShowAddons"
-              @collapsePizzasList="collapsWithoutAdding"/>
+              @collapsePizzasList="collapsWithoutAdding"
+              @showAddonsList="showFeature"/>
     </div>
     <div class="pizza-picture" :style="`background-image: url(${img})`">
         <img :alt="name" :src="img">
@@ -64,20 +65,27 @@
         </div>
       </div>
     </div>
-
+    <div class="addonOptions" :class="{showedAddons: showAddonOptions}">
+      <AddonsList @closeAddonsList="showFeature"/>
+    </div>
+     
   </div>
 </template>
 <script>
   import Addons from '~/components/Addons/Addons.vue';
-  import { mapMutations } from 'vuex';
+  import { mapMutations } from 'vuex';  
+  import AddonsList from '~/components/AddonsList/AddonsList.vue'
+
 export default {
   components: {
-    Addons
+    Addons,
+    AddonsList
   },
   props: ['name', 'addons', 'description', 'nutrition', 'pastryType', 'sizes', 'prices', 'img', 'index'],
   data() {
     return {
       showAddons: false,
+      showAddonOptions: false,
       isNutritionsShown: false,
       sizeIndexValue: 0,
       priceIndexValue: 0,
@@ -148,6 +156,11 @@ export default {
 
     addPizzaToCart: function() {
       this.$store.commit('order/add', this.mainObject);
+    },
+
+    showFeature: function(value) {
+      console.log(this.showAddonOptions, value);
+      this.showAddonOptions = value;
     }
   },
   computed: {
@@ -390,7 +403,12 @@ export default {
     display: flex;
     justify-content: space-between;
   }
-
+  .addonOptions {
+    display: none;
+  }
+  .showedAddons {
+    display: flex;
+  }
 
 
 </style>
