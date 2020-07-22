@@ -75,14 +75,7 @@
         contentHeight: null
       }
     },
-    // mounted() {
-    //   let contentHeight = document.querySelector(".goods");
-    //   this.contentHeight = window.getComputedStyle(contentHeight).height;
-    //   let orderElement = document.querySelector(".order-widget");
-    //   if(orderElement) {
-    //     orderElement.style.height = this.contentHeight;
-    //   }
-    // },
+   
     methods: {
       showDetails: function () {
         this.isDetailsShown = !this.isDetailsShown;

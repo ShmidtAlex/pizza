@@ -18,6 +18,8 @@ this app is a SPA for ordering pizza. as a prototype used papa Jones.
 	9. order button doesn't work
 	10. order section height should be the same as the content of pizza section height
 	11. the inner container in order section should contain cart snipper wrapper and positioned as fixed
+	12. add ingredients button doesn't work
+	
 
 ## Build Setup
 
