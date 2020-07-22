@@ -71,9 +71,18 @@
         isDetailsShown: false,
         increasedQuantity: 0,
         newPrice: null,
-        cleared: false
+        cleared: false,
+        contentHeight: null
       }
     },
+    // mounted() {
+    //   let contentHeight = document.querySelector(".goods");
+    //   this.contentHeight = window.getComputedStyle(contentHeight).height;
+    //   let orderElement = document.querySelector(".order-widget");
+    //   if(orderElement) {
+    //     orderElement.style.height = this.contentHeight;
+    //   }
+    // },
     methods: {
       showDetails: function () {
         this.isDetailsShown = !this.isDetailsShown;
@@ -109,6 +118,9 @@
           return this.storedObject.length + this.increasedQuantity;
         }
 
+      },
+      actualContentHeight: function() {
+        return this.contentHeight;
       }
     }
 
@@ -219,7 +231,7 @@
     align-items: center;
   }
   .cart-details-block__wrapper {
-    max-height: 270px;
+    max-height: 600px;
     overflow-y: scroll;
     width: 100%;
   }

@@ -15,6 +15,9 @@ this app is a SPA for ordering pizza. as a prototype used papa Jones.
 	6. develop contact us section, bonuses, promotions
 	7. delete german language and location, develop and add russian instead
 	8. ponder mobile chema
+	9. order button doesn't work
+	10. order section height should be the same as the content of pizza section height
+	11. the inner container in order section should contain cart snipper wrapper and positioned as fixed
 
 ## Build Setup
 

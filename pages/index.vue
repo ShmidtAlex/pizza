@@ -7,7 +7,9 @@
     </div>
 
     <div class="hidden" :class="{'order-widget': pizzasListCollapsed }">
-      <OrderWidget />
+      <div class="fixed-cart">
+        <OrderWidget />
+      </div>
     </div>
   </div>
 </template>
@@ -33,6 +35,7 @@ export default {
       pizzasListCollapsed: false
     }
   },
+
   methods: {
     collapsPizzasList: function (value) {
         this.pizzasListCollapsed = true;
@@ -64,6 +67,9 @@ export default {
   justify-content: center;
   margin: 110px 0 0 0;
   padding-top: 50px;
+}
+.fixed-cart {
+  position: fixed;
 }
 
 .title {
