@@ -118,7 +118,7 @@
   .cart-snippet-wrapper {
     width: 300px;
     height: 400px;
-    position: fixed;
+    position: relative;
     top: 150px;
     display: flex;
     flex-direction: row;

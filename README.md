@@ -6,6 +6,16 @@ this app is a SPA for ordering pizza. as a prototype used papa Jones.
 
 > test-task for innoscripta
 
+## tasks:
+	1. develop sign in form properly
+	2. correct size pizzas' page while cart part is showed
+	3. add combo section
+	4. add snakes section
+	5. add salad section
+	6. develop contact us section, bonuses, promotions
+	7. delete german language and location, develop and add russian instead
+	8. ponder mobile chema
+
 ## Build Setup
 
 ```bash

@@ -46,8 +46,8 @@ export default {
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: space-around;
+  align-items: flex-start;
   text-align: center;
   background: #f8f8f8;
 }
@@ -56,11 +56,15 @@ export default {
 }
 .order-widget {
   position: relative;
-  width: 40%;
-  height: 400px;
+  width: 22%;
+  min-width: 380px;
+  height: fit-content;
   display: flex;
   flex-direction: row;
   justify-content: center;
+  border: 1px solid;
+  margin: 110px 0 0 0;
+  padding-top: 50px;
 }
 
 .title {
@@ -87,5 +91,28 @@ export default {
 .goods {
   width: fit-content;
   height: fit-content;
+}
+@media(min-width:1585px) {
+  .goods {
+    width: 1300px;
+  }
+}
+@media(max-width:1634px) {
+  .goods {
+     width: 970px;
+  }
+   
+}
+@media(max-width:1310px) {
+  .goods {
+     width: 670px;
+  }
+   
+}
+@media(max-width:1000px) {
+  .goods {
+     width: 300px;
+  }
+   
 }
 </style>

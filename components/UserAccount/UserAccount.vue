@@ -1,5 +1,5 @@
 <template>
-  <div class="user-account-wrapper">
+  <div class="user-account-wrapper" style="display: none">
     <div class="sign-in-block_hidden" :class="{'sign-in-block_visible': isActive}">
       <UserSignIn />
     </div>

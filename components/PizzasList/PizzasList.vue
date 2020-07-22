@@ -153,13 +153,22 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
     padding-top: 100px;
   }
   .pizzas-list-container_collapsed {
-      width: 60%;
+      max-width: 1795px;
   }
   .pizza-sort {
-    margin: 10px 0 0 0;
+    margin: 10px 10px 0 10px;
   }
+  @media(max-width:1585px) {
+    .pizza-sort {
+      margin: 10px 10px 0 0;
+    }
+    .pizzas-list-container_collapsed {
+      max-width: 1295px;
+    }
+  }
+ 
 </style>
