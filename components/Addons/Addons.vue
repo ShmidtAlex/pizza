@@ -80,7 +80,7 @@
   }
 
 </script>
-<style>
+<style scoped>
   .addons-wrapper {
     width: 100%;
     height: 100%;

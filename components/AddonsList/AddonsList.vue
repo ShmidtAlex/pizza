@@ -1,23 +1,31 @@
 <template>
   <div class="addons-options-wrapper">
-    <div class="addons-header">
-      <h4>Here you may opt some extra addons</h4>
-      <div><i>(all addons have the same price {{addonPrice}}$)</i></div>
-    </div>      
-    <div class="addons-body">
-      
+    <div class="addons-up-block">
+      <div class="addons-header">
+        <h4>Here you may opt some extra addons</h4>
+        <div><i>(each extra addons cost {{addonPrice}}$)</i></div>
+      </div>
+      <div class="remove-button-wrapper">
+        <div @click="closeAddons()" class="remove-button" >
+          <svg  xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 14 14">
+            <path fill="white" fill-rule="evenodd"
+                  d="M8.41 7l4.95 4.95-1.41 1.41L7 8.41l-4.95 4.95-1.41-1.41L5.59 7 .64 2.05 2.05.64 7 5.59 11.95.64l1.41 1.41L8.41 7z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+          
+    <div class="addons-body">      
       <div class="addons-list" >
-        <div v-for="addon in availiableAddons" class="addons-list-elem">
-          {{ addon }} 
+        <AddonElement :availiableAddons="availiableAddons" />
+        <!-- <div @click="" v-for="addon in availiableAddons" class="addons-list-elem">
+          <img class="addon-photo" :alt="addon" :src="`/${addon}.jpg`" />
+          <div class="addon-name">{{ addon }}</div>
           <div class="addons-list-price"> {{addonPrice}}$</div>
-        </div>       
+          <div class="summ-for-one-addon-type"></div>
+        </div>   -->     
       </div>
-      <div @click="closeAddons()" class="remove-button" >
-        <svg  xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 14 14">
-          <path fill="currentColor" fill-rule="evenodd"
-                d="M8.41 7l4.95 4.95-1.41 1.41L7 8.41l-4.95 4.95-1.41-1.41L5.59 7 .64 2.05 2.05.64 7 5.59 11.95.64l1.41 1.41L8.41 7z"></path>
-        </svg>
-      </div>
+      
     </div>
       
     <button class="apply-button">Apply</button>
@@ -25,13 +33,17 @@
   
 </template>
 <script>
+  import AddonElement from '~/components/AddonElement/AddonElement.vue'
   export default {
     props: ["addonsList"],
+    components: {
+      AddonElement
+    },
     data() {
       return {
         availiableAddons: this.addonsList,
         optedAddons: [],
-        addonPrice: 2
+        addonPrice: 1
       }
     },
     // mounted() {
@@ -67,30 +79,49 @@
     align-items: center;
 
   }
- 
+  .addons-up-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .addons-header {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    align-items: flex-start;
+    margin: 10px 0 0 40px;
+  }
+  
   .addons-body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
     width: 100%;
-    height: 100%;
+    height: 70%;
   }
 
   .addons-list {
-    width: 1000px;
-    height: 500px;
+    width: 500px;
+    height: 422px;
+    min-height: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: flex-start;
+    margin: 0 20px 20px 20px;
   }
-  
-  .addons-list-elem {    
+
+  .remove-button-wrapper {
     display: flex;
     flex-direction: row;
-    width: fit-content;
-    height: 40px;
+    justify-content: flex-end;
+    align-items: center;
+    width: 40%;
   }
 
   .remove-button {
@@ -103,6 +134,23 @@
   }
 
   .apply-button {
-
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    vertical-align: middle;
+    height: 48px;
+    padding: 15px 25px;
+    border-radius: 24px;
+    background-color: #009471;
+    border: none;
+    color: #fff;
+    font-family: Gotham Pro,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin: 20px;
+    font-size: 16px;
+    outline: none;
   }
 </style>

@@ -119,7 +119,7 @@
 
   }
 </script>
-<style>
+<style scoped>
   .cart-snippet-wrapper {
     width: 300px;
     height: 400px;

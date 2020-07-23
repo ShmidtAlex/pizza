@@ -14,12 +14,15 @@ this app is a SPA for ordering pizza. as a prototype used papa Jones.
 	5. add salad section
 	6. develop contact us section, bonuses, promotions
 	7. delete german language and location, develop and add russian instead
-	8. ponder mobile chema
-	9. order button doesn't work
+	8. ponder mobile schema
+	9. "order now" button doesn't work
 	11. the inner container in order section should contain cart snipper wrapper and positioned as fixed +
 	12. "add ingredients" button doesn't work +
 	13. check if all console.log deleted +
 	14. check if layout has cross-browser support 
+	15. check if used the best practices of vue
+	16. all functions, variables and class/id should have proper and understandable names in one style
+	17. buttons in "addon-element" component should be gradiented. while press on plus - right to left and vice versa.
 
 ## Build Setup
 
