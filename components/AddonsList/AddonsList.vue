@@ -17,17 +17,17 @@
           
     <div class="addons-body">      
       <div class="addons-list" >
-        <AddonElement :availiableAddons="availiableAddons" />
-        <!-- <div @click="" v-for="addon in availiableAddons" class="addons-list-elem">
-          <img class="addon-photo" :alt="addon" :src="`/${addon}.jpg`" />
-          <div class="addon-name">{{ addon }}</div>
-          <div class="addons-list-price"> {{addonPrice}}$</div>
-          <div class="summ-for-one-addon-type"></div>
-        </div>   -->     
+        <div class="addons-element-container" v-for="addon in availiableAddons">
+          <AddonElement @decreaseNumbers="decreaseNumbers" @increaseNumbers="increaseNumbers" :availiableAddons="addon" />
+        </div>
+        
       </div>
       
     </div>
-      
+      <div class="total-price"> 
+        <div class="text">Total price for all addons:</div>
+        <div class="price">{{ totalPrice }} $</div>
+      </div>
     <button class="apply-button">Apply</button>
   </div>
   
@@ -43,22 +43,36 @@
       return {
         availiableAddons: this.addonsList,
         optedAddons: [],
-        addonPrice: 1
+        addonPrice: 1,
+        totalPrice: 0,
+        totalAddonNumbers: 0
       }
     },
     // mounted() {
     //   this.localAddons = this.addons;
     // },
     methods: {
-        closeAddons: function() {
-          this.$emit('closeAddonsList', false);
-        }
-    
+      closeAddons: function() {
+        this.$emit('closeAddonsList', false);
+      },
+      decreaseNumbers: function() {
+        if (this.totalAddonNumbers > 0) {
+          this.totalAddonNumbers--;
+          this.countAddonPrice();
+        }  
+      },
+      increaseNumbers: function() {
+        this.totalAddonNumbers++;
+        this.countAddonPrice();
+      },
+      countAddonPrice: function() {
+        this.totalPrice = this.addonPrice * this.totalAddonNumbers;
+      }    
     },
     computed: {
-    //   removed: function () {
-    //     return this.removedAddons;
-    //   }
+      // computedAddonPrice: function() {
+      //   return this.totalPrice;
+      // }
     }
   }
 </script>
@@ -106,7 +120,7 @@
   }
 
   .addons-list {
-    width: 500px;
+    width: 100%;
     height: 422px;
     min-height: fit-content;
     display: flex;
@@ -114,6 +128,10 @@
     justify-content: space-around;
     align-items: flex-start;
     margin: 0 20px 20px 20px;
+  }
+
+  .addons-element-container {
+    width: 70%;
   }
 
   .remove-button-wrapper {
@@ -152,5 +170,14 @@
     margin: 20px;
     font-size: 16px;
     outline: none;
+  }
+  .total-price {    
+    display: flex;
+    justify-content: flex-start;
+    width: 95%;
+    margin: 0 0 0 20px;
+  }
+  .text {
+    margin: 0 10px 0 40px;
   }
 </style>
