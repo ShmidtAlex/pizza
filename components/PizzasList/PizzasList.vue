@@ -125,18 +125,21 @@
       imgSrc: '/Hawai-traditional.jpg'
     }
   ]
+
   import PizzaUnit from '../PizzaUnit/PizzaUnit.vue';
   import { mapMutations } from 'vuex';
   export default {
     components: {
       PizzaUnit,
     },
+
     data() {
       return {
         pizzaList: pizzasData,
         collapsed: false,
       }
     },
+    
     methods: {
       collapsePizzasListSection: function(value) {
         this.collapsed = value;

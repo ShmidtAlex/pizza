@@ -37,21 +37,28 @@ export default {
         totalNumber: 0
       }
     },
-    // mounted() {
-    //   this.localAddons = this.addons;
-    // },
+   
     methods: {
+
        decrease: function(){
         if (this.totalNumber > 0) {
            this.totalNumber--;
-           this.$emit('decreaseNumbers', true);
+           this.optedAddons.name = this.availiableAddons;
+           this.optedAddons.number = this.totalNumber;
+           this.$emit('decreaseNumbers', this.optedAddons);
         }          
        },
+
        increase: function () {
+        "it's necessary to limit amount of addons"
           this.totalNumber++;
-          this.$emit('increaseNumbers', true)
+          this.optedAddons.name = this.availiableAddons;
+           this.optedAddons.number = this.totalNumber;
+          this.$emit('increaseNumbers', this.optedAddons)
        }
+
     },
+    
     computed: {
       computedTotalNumber: function() {
         return this.totalNumber;

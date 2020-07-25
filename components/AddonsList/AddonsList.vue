@@ -28,7 +28,7 @@
         <div class="text">Total price for all addons:</div>
         <div class="price">{{ totalPrice }} $</div>
       </div>
-    <button class="apply-button">Apply</button>
+    <button @click="applyAddons" class="apply-button">Apply</button>
   </div>
   
 </template>
@@ -42,37 +42,55 @@
     data() {
       return {
         availiableAddons: this.addonsList,
-        optedAddons: [],
+        optedAddons: {},
         addonPrice: 1,
         totalPrice: 0,
         totalAddonNumbers: 0
       }
     },
-    // mounted() {
-    //   this.localAddons = this.addons;
-    // },
+    mounted() {
+      this.fillOptedAddonsDefaultState();
+    },
     methods: {
       closeAddons: function() {
         this.$emit('closeAddonsList', false);
       },
-      decreaseNumbers: function() {
+
+      decreaseNumbers: function(value) {
         if (this.totalAddonNumbers > 0) {
+          this.optedAddons[value.name] -= 1;
           this.totalAddonNumbers--;
           this.countAddonPrice();
         }  
       },
-      increaseNumbers: function() {
+
+      increaseNumbers: function(value) {
+        this.optedAddons[value.name] += 1;
         this.totalAddonNumbers++;
         this.countAddonPrice();
       },
+
       countAddonPrice: function() {
         this.totalPrice = this.addonPrice * this.totalAddonNumbers;
-      }    
+      },
+
+      fillOptedAddonsDefaultState: function(){
+        let self = this;
+        Array.from(this.availiableAddons).forEach(function(element){
+          if (typeof element === 'string'){
+            self.optedAddons[element] = 0;
+          }
+        })
+      },
+
+      applyAddons: function() {
+        this.$emit('summaryOptedAddons', this.optedAddons);
+        this.closeAddons();
+      }   
+
     },
     computed: {
-      // computedAddonPrice: function() {
-      //   return this.totalPrice;
-      // }
+
     }
   }
 </script>

@@ -66,7 +66,7 @@
       </div>
     </div>
     <div class="addonOptions" :class="{showedAddons: showAddonOptions}">
-      <AddonsList :addonsList="addons" @closeAddonsList="showFeature"/>
+      <AddonsList :addonsList="addons" @summaryOptedAddons="nestOptedAddons" @closeAddonsList="showFeature"/>
     </div>
      
   </div>
@@ -160,6 +160,10 @@ export default {
 
     showFeature: function(value) {
       this.showAddonOptions = value;
+    },
+
+    nestOptedAddons: function(value) {
+      this.finalObject.extraAddons = value;   
     }
   },
   computed: {

@@ -25,6 +25,7 @@ this app is a SPA for ordering pizza. as a prototype used papa Jones.
 	17. buttons in "addon-element" component should be gradiented. while press on plus - right to left and vice versa.
 	18. addonsList should get from addonElement number and names of choosen addons
 	19. number of choosen addons should be shown on addonsList component, just like a total cost of all addons
+	20. adding addons to the finalObject in PizzaUnit component should processed after pressing apply button
 
 ## Build Setup
 
