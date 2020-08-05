@@ -28,6 +28,8 @@ this app is a SPA for ordering pizza. as a prototype used papa Jones.
 	20. adding addons to the finalObject in PizzaUnit component should processed after pressing apply button +
 	21. totalPrice in AddonsList component should be resetted after closing component
 	22. button addToCart in addon section should appears only after removing any addons or shouldn't anyway?
+	23. set impact of removing ingredients on chart and extraAddons field of finalObject
+	24. positions in cart should be interactive and availiable for redacting: removing and adding ingreditents
 
 ## Build Setup
 

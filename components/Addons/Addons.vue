@@ -28,7 +28,7 @@
         <div class="cansel-block">
           <button @click="hideAddons">Cansel</button>
         </div>
-        <div @click="addToCartWithChanges" class="add-to-cart">Add to cart</div>
+        <div class="add-to-cart" :class="{'repeat-active': removedStatus }" @click="addToCartWithChanges" >repeat</div>
       </div>
     </div>
   </div>
@@ -36,45 +36,77 @@
 </template>
 <script>
   export default {
-    props: ['isShown', 'addons', 'objectForIngredientManipulations'],
+    props: ['isShown', 'addons', 'objectForIngredientManipulations', 'isAddonListChanged'],
     data() {
       return {
         localAddons: null,
-        removedAddons: []
+        removedAddons: [],
+        isRemoved: false
       }
     },
     mounted() {
       this.localAddons = this.addons;
     },
     methods: {
+
       hideAddons: function() {
         this.$emit('updateShowAddonsStatus', false);
         this.canselChanges();
       },
+
       removeIngredient: function (value) {
+        this.changeIsRemoveStatus();
         if(!this.removedAddons.includes(value)){
           this.removedAddons.push(value);
         } else {
           this.removedAddons = this.removedAddons.filter(elem => elem !== value);
         }
       },
+
+      changeIsRemoveStatus: function (value) {
+        if (value) {
+          this.isRemoved = value;
+        } else {
+           this.isRemoved = true;
+         }
+      },
+
       canselChanges: function() {
+        this.isRemoved = false;
         this.removedAddons = [];
       },
+
       addToCartWithChanges: function () {
-        this.objectForIngredientManipulations.excludedIngridients = this.removedAddons;
-        this.$store.commit('order/addChangedIngredients', this.objectForIngredientManipulations);
-        this.$emit('collapsePizzasList', true)
-        this.$emit('updateShowAddonsStatus', false);
-        this.canselChanges();
+        if(this.isRemoved) {
+          this.objectForIngredientManipulations.excludedIngridients = this.removedAddons;
+          this.$store.commit('order/addChangedIngredients', this.objectForIngredientManipulations);
+          this.$emit('collapsePizzasList', true)
+          this.$emit('updateShowAddonsStatus', false);
+          this.canselChanges();
+        } else {
+          return;
+        }        
       },
+
       showAddonsForOpting: function(event) {
         this.$emit('showAddonsList', true);
       }
+      
     },
+    
     computed: {
       removed: function () {
         return this.removedAddons;
+      },
+      removedStatus: function () {
+        return this.isRemoved;
+      }
+    },
+
+    watch: {
+      isAddonListChanged: function (oldVal, newVal) {
+        console.log(oldVal, newVal);
+        this.isRemoved = true;
       }
     }
   }
@@ -88,9 +120,11 @@
     background-color: rgba(0,0,0, .3);
     z-index: 3;
   }
+
   h3  {
     margin-bottom: 10px;
   }
+
   .addons {
     position: absolute;
     top: 16px;
@@ -107,10 +141,12 @@
     color: #70544f;
     font-size: 18px;
   }
+
   .removed-addons {
     color: rgba(112, 84, 79, .5);
     text-decoration: line-through;
   }
+
   .addon {
     display: flex;
     flex-direction: row;
@@ -119,6 +155,7 @@
     width: 100%;
     padding-bottom: 10px;
   }
+
   .add-section {
     position: relative;
     padding: 10px 0 10px 25px;
@@ -130,40 +167,19 @@
     width: 100%;
     justify-content: flex-start;
   }
+
   a {
     color: inherit;
   }
+
   .plus {
     position: absolute;
     top: 13px;
     left: 0;
     width: 16px;
     height: 16px;
-    /*border-radius: 50%;*/
-    /*background-color: #009471;*/
   }
-  /*.plus:before {
-    content: "";
-    width: 8px;
-    height: 2px;
-    margin-top: -1px;
-    margin-left: -4px;
-    background-color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-  }
-  .plus:after {
-    content: "";
-    width: 2px;
-    height: 8px;
-    margin-top: -4px;
-    margin-left: -1px;
-    background-color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-  }*/
+  
   .action-block {
     width: 100%;
     display: flex;
@@ -172,14 +188,15 @@
     border-top: 1px solid rgba(0,0,0, .2);
     padding: 10px 0 0px 0;
   }
-  .add-to-cart {
+
+   .add-to-cart {
+    background-color: lightgray;
     position: relative;
     display: inline-block;
     vertical-align: middle;
     height: 48px;
     padding: 15px 25px;
     border-radius: 24px;
-    background-color: #009471;
     border: none;
     color: #fff;
     font-size: 14px;
@@ -189,4 +206,11 @@
     text-transform: uppercase;
     cursor: pointer;
   }
+
+  .repeat-active {
+    background-color: #009471;
+  }
+
+ 
+ 
 </style>

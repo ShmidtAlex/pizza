@@ -131,6 +131,7 @@
   }
 </script>
 <style scoped>
+
   .cart-snippet-wrapper {
     width: 300px;
     height: 400px;
@@ -141,6 +142,7 @@
     align-items: flex-start;
     margin-bottom: 70px;
   }
+
   .cart-snippet-block {
     width: 100%;
     min-height: 90%;
@@ -154,6 +156,7 @@
     background-color: #c21313;
     border-radius: 2px;
   }
+
   .cart-snippet-circle-element {
     position: absolute;
     box-sizing: border-box;
@@ -166,11 +169,13 @@
     border: 3px solid #c21313;
     color: #c21313;
   }
+
   .cart-img {
     position: absolute;
     top: 15px;
     left: 27px;
   }
+
   .cart-snippet-body {
     width: 100%;
     height: 100%;
@@ -182,6 +187,7 @@
     justify-content: flex-start;
     /*padding: 15px;*/
   }
+
   .cart-number {
     width: 100%;
     display: flex;
@@ -191,6 +197,7 @@
     height: 80px;
     padding: 15px;
   }
+
   h3 {
     padding: 0;
     margin: 0 0 0 0;
@@ -203,6 +210,7 @@
     align-items: center;
     height: 100%;
   }
+
   .positions-number,
   .expand-list,
   .clear {
@@ -211,6 +219,11 @@
     border: none;
     outline: none;
   }
+
+  .position-number {
+    margin: 0;
+  }
+
   .expand-list {
     border-radius: 10px;
     position: relative;
@@ -218,6 +231,7 @@
     border-style: solid;
     cursor: pointer;
   }
+
   .expand-list:after {
     content: '';
     position: absolute;
@@ -226,6 +240,7 @@
     top: -2px;
     left: 1px;
   }
+
   .cart-info-line {
     display: flex;
     position: relative;
@@ -234,6 +249,7 @@
     height: 100%;
     align-items: center;
   }
+
   .cart-details-block__wrapper {
     max-height: 600px;
     overflow-y: scroll;
@@ -248,6 +264,7 @@
     justify-content: space-around;
     padding: 0 15px;
   }
+
   .cart-details,
   .change-number-pizzatype {
     width: 100%;
@@ -285,11 +302,13 @@
     justify-content: space-between;
     width: 30%
   }
+
   .pizza-info {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
+
   .pizza-name {
     width: 100%;
     height: 18px;
@@ -297,12 +316,14 @@
     font-weight: 700;
     min-height: fit-content;
   }
+
   .pizza-details {
     width: 100%;
     /*height: 45px;*/
     font-size: 11px;
     font-weight: 400;
   }
+
   .total-amount-block {
     display: flex;
     flex-direction: row;
@@ -312,6 +333,7 @@
     border-top: 1px solid lightgreen;
     padding: 10px 15px 0 15px;
   }
+
   .order-now-section {
     display: flex;
     flex-direction: row;
@@ -320,6 +342,7 @@
     height: 50%;
     align-items: flex-end;
   }
+
   .order-now {
     position: relative;
     display: flex;
@@ -369,12 +392,14 @@
     align-items: center;
     color: #009471;
   }
+
   .header {
     color: black;
     font-size: 12px;
     font-family: Gotham Pro,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
     font-weight: 800;
   }
+  
   .addon {
     display: flex;
     flex-direction: row;

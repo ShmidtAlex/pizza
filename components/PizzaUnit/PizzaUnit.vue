@@ -5,6 +5,7 @@
               :objectForIngredientManipulations="defaultObject"
               :isShown="showAddons"
               :addons="addons"
+              :isAddonListChanged="addonsStatus"
               @updateShowAddonsStatus="updateShowAddons"
               @collapsePizzasList="collapsWithoutAdding"
               @showAddonsList="showFeature"/>
@@ -87,6 +88,7 @@ export default {
       showAddons: false,
       showAddonOptions: false,
       isNutritionsShown: false,
+      addonsStatus: false,
       sizeIndexValue: 0,
       priceIndexValue: 0,
       optedType: 'Traditional',
@@ -155,6 +157,7 @@ export default {
     },
 
     addPizzaToCart: function() {
+      // this.addonsStatus = true;
       this.$store.commit('order/add', this.mainObject);
     },
 
@@ -163,7 +166,7 @@ export default {
     },
 
     nestOptedAddons: function(value) {
-      console.log(value);
+      this.addonsStatus = true;
       this.finalObject.extraAddons = value;   
     }
   },
