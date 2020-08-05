@@ -99,16 +99,20 @@
         return this.removedAddons;
       },
       removedStatus: function () {
-        return this.isRemoved;
-      }
+        if (this.isRemoved || this.isAddonListChanged)
+        return true;
+      },
+      // isAddonListChanged: function () {
+      //   return this.isAddonListChanged;
+      // }
     },
 
-    watch: {
-      isAddonListChanged: function (oldVal, newVal) {
-        console.log(oldVal, newVal);
-        this.isRemoved = true;
-      }
-    }
+    // watch: {
+    //   isAddonListChanged: function (oldVal, newVal) {
+    //     console.log(oldVal, newVal);
+    //     this.isRemoved = true;
+    //   }
+    // }
   }
 
 </script>
