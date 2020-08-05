@@ -7,7 +7,7 @@ this app is a SPA for ordering pizza. as a prototype used papa Jones.
 > test-task for innoscripta
 
 ## tasks:
-	1. develop sign in form properly
+	1. develop sign-in form properly
 	2. correct size pizzas' page while cart part is showed +
 	3. add combo section
 	4. add snakes section
@@ -26,7 +26,7 @@ this app is a SPA for ordering pizza. as a prototype used papa Jones.
 	18. addonsList should get from addonElement number and names of choosen addons +
 	19. number of choosen addons should be shown on addonsList component, just like a total cost of all addons +
 	20. adding addons to the finalObject in PizzaUnit component should processed after pressing apply button +
-	21. totalPrice in AddonsList component should reset after closing component
+	21. totalPrice in AddonsList component should be resetted after closing component
 	22. button addToCart in addon section should appears only after removing any addons or shouldn't anyway?
 
 ## Build Setup

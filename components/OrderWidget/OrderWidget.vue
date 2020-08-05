@@ -29,8 +29,19 @@
                 <div class="pizza-details">
                   <div v-if="unit.text.excludedIngridients.length"
                        class="removedIngredients"
-                       v-for="ingredient in unit.text.excludedIngridients"> - {{ingredient}}</div>
-                  {{unit.text.pizzaSize}} cm {{unit.text.pizzaType}}</div>
+                       v-for="ingredient in unit.text.excludedIngridients"> - {{ingredient}}
+                  </div>
+                  {{unit.text.pizzaSize}} cm {{unit.text.pizzaType}}
+                </div>
+                <div v-if="unit.text.extraAddons === {}" class="extra-addons">with no addons</div>
+                <div class="header">Addition ingredients:</div>
+                <div else class="extra-addons">                  
+                  <div class="addon" v-for="(addon, addonKey) in unit.text.extraAddons" :key="addonKey">
+                    <div class="name">{{addonKey}} + </div>
+                    <div clas="quantity"> {{addon}}</div>
+                  </div>
+                  <!-- {{unit.text.extraAddons}} -->
+                </div>
               </div>
               <div @click="removePosition(unitIndex)" class="remove-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 14 14">
@@ -343,8 +354,33 @@
     top: 0;
     left: 0;
   }
+
   .removedIngredients {
     color: darkred;
+  }
+
+  .extra-addons {
+    font-size: 11px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    color: #009471;
+  }
+  .header {
+    color: black;
+    font-size: 12px;
+    font-family: Gotham Pro,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+    font-weight: 800;
+  }
+  .addon {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 2px;
   }
 
 </style>

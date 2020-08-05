@@ -163,6 +163,7 @@ export default {
     },
 
     nestOptedAddons: function(value) {
+      console.log(value);
       this.finalObject.extraAddons = value;   
     }
   },
