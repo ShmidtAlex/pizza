@@ -30,6 +30,7 @@ this app is a SPA for ordering pizza. as a prototype used papa Jones.
 	22. button addToCart in addon section should appears only after removing any addons or shouldn't anyway?
 	23. set impact of removing ingredients on chart and extraAddons field of finalObject
 	24. positions in cart should be interactive and availiable for redacting: removing and adding ingreditents
+	25. while we met difficulties with pushing fullfilled object from addonsList component, we'll create a base order object in vuex and will set it's fields through pizzasList component directly. Next, we'll create new store object, which will store the whole oreder, which will consist from base/modified objects
 
 ## Build Setup
 
