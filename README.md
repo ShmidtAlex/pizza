@@ -30,6 +30,8 @@ this app is a SPA for ordering pizza. as a prototype used papa Jones.
 	22. button addToCart in addon section should appears only after removing any addons or shouldn't anyway?
 	23. set impact of removing ingredients on chart and extraAddons field of finalObject
 	24. positions in cart should be interactive and availiable for redacting: removing and adding ingreditents
+	25. resolve problem, when after removing ingredient, adding extra addons cause to [vuex] do not mutate vuex store state outside mutation handlers" error
+	26. Addons doesn't summ with main pizza price
 
 ## Build Setup
 

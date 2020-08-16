@@ -8,6 +8,8 @@
               :isAddonListChanged="addonsStatus"
               @updateShowAddonsStatus="updateShowAddons"
               @collapsePizzasList="collapsWithoutAdding"
+              @addToCartAction="collapsePizzasList"
+              @addRemovedIngredient="addToExcludedIngredients"
               @showAddonsList="showFeature"/>
     </div>
     <div class="pizza-picture" :style="`background-image: url(${img})`">
@@ -115,6 +117,17 @@ export default {
     }
   },
   methods: {
+    addToExcludedIngredients: function (value) {
+      let finalObject = this.finalObject.excludedIngridients.includes(value);
+      if (finalObject){
+        console.log(value);
+        finalObject = this.finalObject.excludedIngridients.filter(elem => elem !== value)
+      } else {
+        this.finalObject.excludedIngridients.push(value) 
+      }
+      
+    },
+
     showAddonInUnit: function () {
         this.showAddons = true;
     },
@@ -157,17 +170,24 @@ export default {
     },
 
     addPizzaToCart: function() {
-      // this.addonsStatus = true;
+      this.addonsStatus = true;
       this.$store.commit('order/add', this.mainObject);
     },
 
     showFeature: function(value) {
       this.showAddonOptions = value;
     },
-
+    // there is a problem with this function, it crashes, like it tryes to mutate store without using mutations
     nestOptedAddons: function(value) {
       this.addonsStatus = true;
-      this.finalObject.extraAddons = value;   
+      for (let key in value) {
+        let objwrap = {}
+            objwrap[key] = value[key];
+        this.finalObject.extraAddons.push(objwrap);  
+      }       
+    },
+    compareAddonsAndExcludedIngredients: function() {
+      //some compare with result
     }
   },
   computed: {

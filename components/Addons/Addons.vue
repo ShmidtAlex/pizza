@@ -28,7 +28,7 @@
         <div class="cansel-block">
           <button @click="hideAddons">Cansel</button>
         </div>
-        <div class="add-to-cart" :class="{'repeat-active': removedStatus }" @click="addToCartWithChanges" >repeat</div>
+        <div class="add-to-cart" :class="{'repeat-active': removedStatus }" @click="addToCartWithChanges" >add to cart</div>
       </div>
     </div>
   </div>
@@ -57,12 +57,15 @@
       removeIngredient: function (value) {
         this.changeIsRemoveStatus();
         if(!this.removedAddons.includes(value)){
+          console.log("if", value);
           this.removedAddons.push(value);
+          this.$emit("addRemovedIngredient", value)
         } else {
+          console.log("else");
           this.removedAddons = this.removedAddons.filter(elem => elem !== value);
         }
       },
-
+      //get from descendant if any extra addons was opted
       changeIsRemoveStatus: function (value) {
         if (value) {
           this.isRemoved = value;
@@ -75,19 +78,20 @@
         this.isRemoved = false;
         this.removedAddons = [];
       },
-
+      //adds changed list of addons to cart by emiting in parent element
       addToCartWithChanges: function () {
-        if(this.isRemoved) {
+        if(this.isRemoved || this.isAddonListChanged) {
           this.objectForIngredientManipulations.excludedIngridients = this.removedAddons;
-          this.$store.commit('order/addChangedIngredients', this.objectForIngredientManipulations);
-          this.$emit('collapsePizzasList', true)
+          // this.$store.commit('order/addChangedIngredients', this.objectForIngredientManipulations); instead of this, we should use:
+          this.$emit('addToCartAction', true);
+          this.$emit('collapsePizzasList', true);
           this.$emit('updateShowAddonsStatus', false);
           this.canselChanges();
         } else {
           return;
         }        
       },
-
+      //shows special popup window for opting extra addons
       showAddonsForOpting: function(event) {
         this.$emit('showAddonsList', true);
       }
