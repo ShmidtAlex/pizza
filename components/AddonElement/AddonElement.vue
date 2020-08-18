@@ -48,7 +48,7 @@ export default {
            this.$emit('decreaseNumbers', this.optedAddons);
         }          
        },
-
+       
        increase: function () {
         "it's necessary to limit amount of addons"
           this.totalNumber++;

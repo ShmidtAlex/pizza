@@ -77,6 +77,7 @@
         @closeAddonsList="showFeature"
         @addToPrice="addAddonToPrice"
         @subtractFromPrice="subtractAddonFromPrice"
+        ref="AddonsList"
         />
     </div>
      
@@ -170,6 +171,8 @@ export default {
     addPizzaToCart: function() {
       // this.addonsStatus = true;
       this.$store.commit('order/add', this.mainObject);
+      this.finalObject = this.defaultObject;
+      // this.$refs.AddonsList.closeAddonsWithoutSaving();
     },
 
     showFeature: function(value) {

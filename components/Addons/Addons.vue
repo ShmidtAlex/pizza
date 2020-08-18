@@ -66,28 +66,14 @@
       },
 
       changeIsRemoveStatus: function (value) {
-        // console.log(value);
           this.isRemoved = !this.isRemoved;
-          // this.$emit('changeIsRemoved', this.isRemoved);
       },
 
       canselChanges: function() {
         this.isRemoved = false;
         this.removedAddons = [];
         this.$emit('setupRemovingIngredient', this.removedAddons);
-      },
-
-      // addToCartWithChanges: function () {
-      //   if(this.isRemoved) {
-      //     this.objectForIngredientManipulations.excludedIngridients = this.removedAddons;
-      //     this.$store.commit('order/addChangedIngredients', this.objectForIngredientManipulations);
-      //     this.$emit('collapsePizzasList', true)
-      //     this.$emit('updateShowAddonsStatus', false);
-      //     this.canselChanges();
-      //   } else {
-      //     return;
-      //   }        
-      // },
+      },     
 
       showAddonsForOpting: function(event) {
         this.$emit('showAddonsList', true);
@@ -99,21 +85,7 @@
       removed: function () {
         return this.excludedIngredients;
       },
-      // removedStatus: function () {
-      //   if (this.isRemoved)
-      //   return true;
-      // },
-      // isAddonListChanged: function () {
-      //   return this.isAddonListChanged;
-      // }
-    },
-
-    // watch: {
-    //   isAddonListChanged: function (oldVal, newVal) {
-    //     console.log(oldVal, newVal);
-    //     this.isRemoved = true;
-    //   }
-    // }
+    },   
   }
 
 </script>
