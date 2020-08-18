@@ -28,7 +28,7 @@
         <div class="cansel-block">
           <button @click="hideAddons">Cansel</button>
         </div>
-        <div class="add-to-cart" :class="{'repeat-active': removedStatus }" @click="addToCartWithChanges" >repeat</div>
+        <!-- <div class="add-to-cart" :class="{'repeat-active': removedStatus }" @click="addToCartWithChanges" >repeat</div> -->
       </div>
     </div>
   </div>
@@ -36,12 +36,12 @@
 </template>
 <script>
   export default {
-    props: ['isShown', 'addons', 'objectForIngredientManipulations', 'isAddonListChanged'],
+    props: ['isShown', 'addons', 'objectForIngredientManipulations', 'isAddonListChanged', 'excludedIngredients'],
     data() {
       return {
         localAddons: null,
-        removedAddons: [],
-        isRemoved: false
+        removedAddons: this.excludedIngredients,
+        isRemoved: this.isRemovedFromAddons
       }
     },
     mounted() {
@@ -51,42 +51,43 @@
 
       hideAddons: function() {
         this.$emit('updateShowAddonsStatus', false);
-        this.canselChanges();
+        // this.canselChanges();//enstead of this we should initialize this event from parent PizzaUnit after pressing button 'Add To Cart'
       },
 
       removeIngredient: function (value) {
-        this.changeIsRemoveStatus();
+        this.changeIsRemoveStatus(value);
         if(!this.removedAddons.includes(value)){
           this.removedAddons.push(value);
+          this.$emit('removeIngredientFromOrder', value)
         } else {
           this.removedAddons = this.removedAddons.filter(elem => elem !== value);
+          this.$emit('setupRemovingIngredient', this.removedAddons);
         }
       },
 
       changeIsRemoveStatus: function (value) {
-        if (value) {
-          this.isRemoved = value;
-        } else {
-           this.isRemoved = true;
-         }
+        // console.log(value);
+          this.isRemoved = !this.isRemoved;
+          // this.$emit('changeIsRemoved', this.isRemoved);
       },
 
       canselChanges: function() {
         this.isRemoved = false;
         this.removedAddons = [];
+        this.$emit('setupRemovingIngredient', this.removedAddons);
       },
 
-      addToCartWithChanges: function () {
-        if(this.isRemoved) {
-          this.objectForIngredientManipulations.excludedIngridients = this.removedAddons;
-          this.$store.commit('order/addChangedIngredients', this.objectForIngredientManipulations);
-          this.$emit('collapsePizzasList', true)
-          this.$emit('updateShowAddonsStatus', false);
-          this.canselChanges();
-        } else {
-          return;
-        }        
-      },
+      // addToCartWithChanges: function () {
+      //   if(this.isRemoved) {
+      //     this.objectForIngredientManipulations.excludedIngridients = this.removedAddons;
+      //     this.$store.commit('order/addChangedIngredients', this.objectForIngredientManipulations);
+      //     this.$emit('collapsePizzasList', true)
+      //     this.$emit('updateShowAddonsStatus', false);
+      //     this.canselChanges();
+      //   } else {
+      //     return;
+      //   }        
+      // },
 
       showAddonsForOpting: function(event) {
         this.$emit('showAddonsList', true);
@@ -96,12 +97,12 @@
     
     computed: {
       removed: function () {
-        return this.removedAddons;
+        return this.excludedIngredients;
       },
-      removedStatus: function () {
-        if (this.isRemoved || this.isAddonListChanged)
-        return true;
-      },
+      // removedStatus: function () {
+      //   if (this.isRemoved)
+      //   return true;
+      // },
       // isAddonListChanged: function () {
       //   return this.isAddonListChanged;
       // }

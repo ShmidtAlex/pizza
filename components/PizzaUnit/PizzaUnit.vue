@@ -6,9 +6,13 @@
               :isShown="showAddons"
               :addons="addons"
               :isAddonListChanged="addonsStatus"
+              :excludedIngredients="comutedExcludedIngredients"
               @updateShowAddonsStatus="updateShowAddons"
               @collapsePizzasList="collapsWithoutAdding"
-              @showAddonsList="showFeature"/>
+              @showAddonsList="showFeature"
+              @removeIngredientFromOrder="checkExtraAddons" 
+              @setupRemovingIngredient="setUpRemoving"
+              />
     </div>
     <div class="pizza-picture" :style="`background-image: url(${img})`">
         <img :alt="name" :src="img">
@@ -67,7 +71,13 @@
       </div>
     </div>
     <div class="addonOptions" :class="{showedAddons: showAddonOptions}">
-      <AddonsList :addonsList="addons" @summaryOptedAddons="nestOptedAddons" @closeAddonsList="showFeature"/>
+      <AddonsList 
+        :addonsList="addons" 
+        @summaryOptedAddons="nestOptedAddons" 
+        @closeAddonsList="showFeature"
+        @addToPrice="addAddonToPrice"
+        @subtractFromPrice="subtractAddonFromPrice"
+        />
     </div>
      
   </div>
@@ -91,13 +101,14 @@ export default {
       addonsStatus: false,
       sizeIndexValue: 0,
       priceIndexValue: 0,
+      isRemoved: false,
       optedType: 'Traditional',
       finalObject: {
         pizzaName: this.name,
         pizzaSize: this.sizes.default,
         pizzaType: this.pastryType.default,
         extraAddons: [],
-        excludedIngridients: [],
+        excludedIngredients: [],
         quantity: 1,
         totalPrice: this.prices.default,
         smallImg: this.img
@@ -107,7 +118,7 @@ export default {
         pizzaSize: this.sizes.default,
         pizzaType: this.pastryType.default,
         extraAddons: [],
-        excludedIngridients: [],
+        excludedIngredients: [],
         quantity: 1,
         totalPrice: this.prices.default,
         smallImg: this.img
@@ -168,11 +179,44 @@ export default {
     nestOptedAddons: function(value) {
       this.addonsStatus = true;
       this.finalObject.extraAddons = value;   
+    },
+
+    addAddonToPrice: function() {
+      this.finalObject.totalPrice++;
+    },
+
+    subtractAddonFromPrice: function() {
+      this.finalObject.totalPrice--;
+    },
+    //it checks, if there is removed ingredient in early opted addons/ if there is, remove it from addons first
+    checkExtraAddons: function(value){
+      let finalObject = this.finalObject.extraAddons
+      if (finalObject.hasOwnProperty(value)) {
+        if(this.finalObject.extraAddons[value] > 0) {
+          this.finalObject.extraAddons[value]--;
+          this.finalObject.excludedIngredients = this.finalObject.excludedIngredients.filter(elem => elem != value);
+        }
+      } else {
+        return;
+      }
+    },
+
+    //it checks, if there is addon ingredient in early removed ingredients
+    checkExcludedIngredients: function(value){
+      console.log(value);
+      console.log(this.finalObject.excludedIngredients)
+    },
+    //if user set up removings
+    setUpRemoving: function(value){
+      this.finalObject.excludedIngredients = value;
     }
   },
   computed: {
     mainObject: function() {
       return this.finalObject;
+    },
+    comutedExcludedIngredients: function(){
+      return this.finalObject.excludedIngredients;
     }
   }
 }

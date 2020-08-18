@@ -32,9 +32,9 @@ export default {
     props: ["availiableAddons"],
     data() {
       return {
-        optedAddons: { name: null, number: 0 } ,
+        optedAddons: { name: null, number: 0 },
         addonPrice: 1,
-        totalNumber: 0
+        totalNumber: 0,
       }
     },
    
@@ -55,6 +55,12 @@ export default {
           this.optedAddons.name = this.availiableAddons;
            this.optedAddons.number = this.totalNumber;
           this.$emit('increaseNumbers', this.optedAddons)
+       },
+       //manage reset properties from parent element
+       resetValue: function() {
+        this.totalNumber = 0;
+        this.optedAddons = { name: null, number: 0 };
+        this.$emit('resetOptedAddons', this.availiableAddons);
        }
 
     },
@@ -63,7 +69,18 @@ export default {
       computedTotalNumber: function() {
         return this.totalNumber;
       }
-    }
+    },
+
+    // watch: {
+    //   optedAddonsResetStatus: function(newVal, oldVal) {
+    //     if(newVal === true) {
+    //       this.optedAddons = { name: null, number: 0 };
+    //       this.totalNumber = 0;
+    //     }
+    //   }
+    // }
+
+
   }
 
 </script>
