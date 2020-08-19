@@ -103,6 +103,7 @@ export default {
       sizeIndexValue: 0,
       priceIndexValue: 0,
       isRemoved: false,
+      storeInitialized: false,
       optedType: 'Traditional',
       finalObject: {
         pizzaName: this.name,
@@ -136,20 +137,28 @@ export default {
     },
 
     changeType: function (value) {
+      if (!this.storeInitialized) {
+        this.initializePizzaUnit();
+      }
       this.optedType = value;
-      this.finalObject.pizzaType = value;
+      // this.finalObject.pizzaType = value;
+      this.$store.commit('pizzaUnit/changePizzaType', value);
     },
 
     changeSize: function(value, size) {
+      if (!this.storeInitialized) {
+        this.initializePizzaUnit();
+      }
       this.sizeIndexValue = value;
       this.priceIndexValue = value;
-      this.finalObject.pizzaSize = size;
+      this.$store.commit('pizzaUnit/changePizzaSize', size);
       this.changePrice(value);
     },
 
     changePrice: function(index) {
       let localKey = Object.keys(this.prices)[index];
       this.finalObject.totalPrice = this.prices[localKey];
+      this.$store.commit('pizzaUnit/changePizzaPrice', this.prices[localKey]);
     },
 
     showNutritions: function() {
@@ -169,8 +178,14 @@ export default {
     },
 
     addPizzaToCart: function() {
+       if (!this.storeInitialized) {
+        this.initializePizzaUnit();
+      }
       // this.addonsStatus = true;
-      this.$store.commit('order/add', this.mainObject);
+      //instead of change local main object every time, when we change something, we will better clone it from vuex state (pizzaUnit.js)
+      let clonnedValue = Object.assign({}, this.$store.state.pizzaUnit.pizzaUnit);
+      console.log(clonnedValue);
+      this.$store.commit('order/add', clonnedValue);
       this.finalObject = this.defaultObject;
       // this.$refs.AddonsList.closeAddonsWithoutSaving();
     },
@@ -193,7 +208,7 @@ export default {
     },
     //it checks, if there is removed ingredient in early opted addons/ if there is, remove it from addons first
     checkExtraAddons: function(value){
-      let finalObject = this.finalObject.extraAddons
+      let finalObject = this.finalObject.extraAddons;
       if (finalObject.hasOwnProperty(value)) {
         if(this.finalObject.extraAddons[value] > 0) {
           this.finalObject.extraAddons[value]--;
@@ -215,8 +230,8 @@ export default {
     },
     //this should initialize pizzaUnit store object by click from parent
     initializePizzaUnit: function() {
-      console.log("works");
-      this.$store.commit('pizzaUnit/fillStorePizzaUnit', this.mainObject);
+      this.storeInitialized = true;
+      this.$store.commit('pizzaUnit/fillStorePizzaUnit', this.defaultObject);
     }
   },
   computed: {

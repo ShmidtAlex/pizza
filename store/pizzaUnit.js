@@ -36,5 +36,13 @@ export const mutations = {
   },
   decreaseQuantity (state, text) {
     state.pizzaUnit.quantity--;
+  },
+  //while opting other pizza size
+  changePizzaPrice (state, text) {
+    state.pizzaUnit.totalPrice = text;
+  },
+  //while impact on pizza cost with additional ingredients
+  changeTotalPrice (state, text) {
+    state.pizzaUnit.totalPrice +=text;
   }
 }
