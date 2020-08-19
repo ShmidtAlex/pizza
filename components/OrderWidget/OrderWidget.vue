@@ -27,9 +27,9 @@
               <div class="pizza-info">
                 <div class="pizza-name">{{unit.text.pizzaName}}</div>
                 <div class="pizza-details">
-                  <div v-if="unit.text.excludedIngridients.length"
+                  <div v-if="unit.text.excludedIngredients.length"
                        class="removedIngredients"
-                       v-for="ingredient in unit.text.excludedIngridients"> - {{ingredient}}
+                       v-for="ingredient in unit.text.excludedIngredients"> - {{ingredient}}
                   </div>
                   {{unit.text.pizzaSize}} cm {{unit.text.pizzaType}}
                 </div>
@@ -37,8 +37,8 @@
                 <div class="header">Addition ingredients:</div>
                 <div else class="extra-addons">                  
                   <div class="addon" v-for="(addon, addonKey) in unit.text.extraAddons" :key="addonKey">
-                    <div class="name">{{addonKey}} + </div>
-                    <div clas="quantity"> {{addon}}</div>
+                    <div v-if="addon > 0" class="name">{{addonKey}} + </div>
+                    <div v-if="addon > 0" clas="quantity"> {{addon}}</div>
                   </div>
                   <!-- {{unit.text.extraAddons}} -->
                 </div>

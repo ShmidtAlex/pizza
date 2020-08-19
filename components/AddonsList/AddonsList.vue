@@ -6,7 +6,7 @@
         <div><i>(each extra addons cost {{addonPrice}}$)</i></div>
       </div>
       <div class="remove-button-wrapper">
-        <div @click="closeAddons()" class="remove-button" >
+        <div @click="closeAddonsWithoutSaving()" class="remove-button" >
           <svg  xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 14 14">
             <path fill="white" fill-rule="evenodd"
                   d="M8.41 7l4.95 4.95-1.41 1.41L7 8.41l-4.95 4.95-1.41-1.41L5.59 7 .64 2.05 2.05.64 7 5.59 11.95.64l1.41 1.41L8.41 7z"></path>
@@ -18,7 +18,12 @@
     <div class="addons-body">      
       <div class="addons-list" >
         <div class="addons-element-container" v-for="addon in availiableAddons">
-          <AddonElement @decreaseNumbers="decreaseNumbers" @increaseNumbers="increaseNumbers" :availiableAddons="addon" />
+          <AddonElement 
+            @decreaseNumbers="decreaseNumbers" 
+            @increaseNumbers="increaseNumbers"
+            @resetOptedAddons="fillOptedAddonsDefaultState" 
+            :availiableAddons="addon" 
+            ref="AddonElement"/>
         </div>
         
       </div>
@@ -52,35 +57,54 @@
       this.fillOptedAddonsDefaultState();
     },
     methods: {
-      closeAddons: function() {
+      closeAddons: function() {        
+        this.$emit('closeAddonsList', false);        
+      },
+
+      closeAddonsWithoutSaving: function(){
+        this.$refs.AddonElement.forEach(function(elem) {
+          elem.resetValue();
+        })
+        this.totalAddonNumbers = 0;
+        this.totalPrice = 0;
         this.$emit('closeAddonsList', false);
       },
 
       decreaseNumbers: function(value) {
         if (this.totalAddonNumbers > 0) {
+          console.log(value)
           this.optedAddons[value.name] -= 1;
           this.totalAddonNumbers--;
           this.countAddonPrice();
+          this.$emit('subtractFromPrice', value);
         }  
       },
 
       increaseNumbers: function(value) {
+        console.log(value)
         this.optedAddons[value.name] += 1;
         this.totalAddonNumbers++;
         this.countAddonPrice();
+        this.$emit('addToPrice', value);
       },
 
       countAddonPrice: function() {
         this.totalPrice = this.addonPrice * this.totalAddonNumbers;
       },
 
-      fillOptedAddonsDefaultState: function(){
+      fillOptedAddonsDefaultState: function(value){
         let self = this;
-        Array.from(this.availiableAddons).forEach(function(element){
-          if (typeof element === 'string'){
-            self.optedAddons[element] = 0;
+        if(!value) {
+          Array.from(this.availiableAddons).forEach(function(element){
+            if (typeof element === 'string'){
+              self.optedAddons[element] = 0;
+            }
+          });
+        } else {
+          if (typeof value === 'string'){
+            self.optedAddons[value] = 0;
           }
-        })
+        }        
       },
 
       applyAddons: function() {
