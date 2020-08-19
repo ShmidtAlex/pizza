@@ -1,6 +1,6 @@
 <template>
   <div id="pizzas" class="pizzas-list-container" :class="{'pizzas-list-container_collapsed': collapsed}">
-    <div class="pizza-sort" v-for="(pizza, indexPizza) in pizzaList">
+    <div @click="initializePizzaUnitStore(pizza.name)" class="pizza-sort" v-for="(pizza, indexPizza) in pizzaList">
       <PizzaUnit :name="pizza.name"
                  :addons="pizza.addons"
                  :description="pizza.description"
@@ -10,6 +10,7 @@
                  :prices="pizza.prices"
                  :img="pizza.imgSrc"
                  :index="indexPizza"
+                 ref="PizzaUnit"
                  @collapseSection="collapsePizzasListSection"
       />
     </div>
@@ -144,6 +145,17 @@
       collapsePizzasListSection: function(value) {
         this.collapsed = value;
         this.$emit('getCartState', true)
+      },
+      initializePizzaUnitStore: function(name) {
+        console.log('parent works', "pizza.name is: ", name)
+        this.$refs.PizzaUnit.forEach(elem => {
+          if (elem.defaultObject.pizzaName === name) {
+            console.log(name);
+             elem.initializePizzaUnit();
+          } else {
+            return;
+          }         
+        })
       }
     }
   }

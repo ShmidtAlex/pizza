@@ -212,6 +212,11 @@ export default {
     //if user set up removings
     setUpRemoving: function(value){
       this.finalObject.excludedIngredients = value;
+    },
+    //this should initialize pizzaUnit store object by click from parent
+    initializePizzaUnit: function() {
+      console.log("works");
+      this.$store.commit('pizzaUnit/fillStorePizzaUnit', this.mainObject);
     }
   },
   computed: {
