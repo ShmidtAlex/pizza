@@ -147,10 +147,9 @@
         this.$emit('getCartState', true)
       },
       initializePizzaUnitStore: function(name) {
-        console.log('parent works', "pizza.name is: ", name)
+        let runningName = this.$store.state.pizzaUnit.pizzaUnit.pizzaName;
         this.$refs.PizzaUnit.forEach(elem => {
-          if (elem.defaultObject.pizzaName === name) {
-            console.log(name);
+          if (elem.defaultObject.pizzaName === name && runningName !== name) {
              elem.initializePizzaUnit();
           } else {
             return;
