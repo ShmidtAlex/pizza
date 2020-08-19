@@ -196,7 +196,8 @@ export default {
 
     nestOptedAddons: function(value) {
       this.addonsStatus = true;
-      this.finalObject.extraAddons = value;   
+      // this.finalObject.extraAddons = value; 
+      this.$store.commit('pizzaUnit/changePizzaExcludedIngredients', value)  
     },
 
     addAddonToPrice: function() {
@@ -208,7 +209,9 @@ export default {
     },
     //it checks, if there is removed ingredient in early opted addons/ if there is, remove it from addons first
     checkExtraAddons: function(value){
-      let finalObject = this.finalObject.extraAddons;
+      // let finalObject = this.finalObject.extraAddons;
+      let finalObject = this.$store.state.pizzaUnit.pizzaUnit.extraAddons;
+      console.log(finalObject);
       if (finalObject.hasOwnProperty(value)) {
         if(this.finalObject.extraAddons[value] > 0) {
           this.finalObject.extraAddons[value]--;
@@ -219,7 +222,7 @@ export default {
       }
     },
 
-    //it checks, if there is addon ingredient in early removed ingredients
+    //it will check, if there is addon ingredient in early removed ingredients
     checkExcludedIngredients: function(value){
       console.log(value);
       console.log(this.finalObject.excludedIngredients)
