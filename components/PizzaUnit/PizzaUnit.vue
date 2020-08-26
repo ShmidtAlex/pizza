@@ -63,6 +63,7 @@
           <button @click="collapsePizzasList" class="add-to-cart">Add to cart</button>
           <div class="price">
             <div class="" v-for="(price, index) in prices">
+              <!-- value doesn't changed, when we add addons, shold be fixed -->
               <div v-if="Object.keys(prices).indexOf(index) === priceIndexValue">
                 {{ price }} &euro;
               </div>

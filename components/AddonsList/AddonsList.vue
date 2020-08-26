@@ -105,7 +105,7 @@
       },
 
       applyAddons: function() {
-        this.$emit('summaryOptedAddons', this.optedAddons);
+        this.$emit('summaryOptedAddons', this.optedAddons);//don't work properly, add to store only last addon
         this.closeAddons();
       }   
 
