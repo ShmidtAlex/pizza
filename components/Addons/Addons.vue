@@ -3,9 +3,9 @@
     <div class="addons" >
       <h3>Remove ingredients</h3>
       <div class="addon" v-for="addon in addons">
-        <div :class="{'removed-addons': removed.includes(addon)}">{{ addon }}</div>
-        <div @click="removeIngredient(addon)" class="remove-button" :class="{'removed-addons': removed.includes(addon)}">
-          <svg v-if="!removed.includes(addon)" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 14 14">
+        <div :class="{'removed-addons': removed.includes(addon.name)}">{{ addon.name }}</div>
+        <div @click="removeIngredient(addon.name)" class="remove-button" :class="{'removed-addons': removed.includes(addon.name)}">
+          <svg v-if="!removed.includes(addon.name)" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 14 14">
             <path fill="currentColor" fill-rule="evenodd"
                   d="M8.41 7l4.95 4.95-1.41 1.41L7 8.41l-4.95 4.95-1.41-1.41L5.59 7 .64 2.05 2.05.64 7 5.59 11.95.64l1.41 1.41L8.41 7z"></path>
           </svg>
@@ -40,8 +40,11 @@
     data() {
       return {
         localAddons: null,
-        removedAddons: this.excludedIngredients,
-        isRemoved: this.isRemovedFromAddons
+        // removedAddons: this.excludedIngredients,
+        removedAddons: [],
+
+        isRemoved: this.isRemovedFromAddons,
+        localRemovedAddons: []
       }
     },
     mounted() {
@@ -55,17 +58,19 @@
       },
 
       removeIngredient: function (value) {
-        this.changeIsRemoveStatus(value);
+        this.changeIsRemoveStatus();
         if(!this.removedAddons.includes(value)){
-          this.removedAddons.push(value);
-          this.$emit('removeIngredientFromOrder', value)
+          this.localRemovedAddons.push(value);
+          this.$emit('removeIngredientFromOrder', value);
+          console.log("I've been worked");
         } else {
           this.removedAddons = this.removedAddons.filter(elem => elem !== value);
           this.$emit('setupRemovingIngredient', this.removedAddons);
+          console.log("I've been worked too");
         }
       },
 
-      changeIsRemoveStatus: function (value) {
+      changeIsRemoveStatus: function () {
           this.isRemoved = !this.isRemoved;
       },
 
@@ -77,8 +82,7 @@
 
       showAddonsForOpting: function(event) {
         this.$emit('showAddonsList', true);
-      }
-      
+      }      
     },
     
     computed: {

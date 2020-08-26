@@ -11,9 +11,9 @@
               </svg>
           </div>        
       </button>
-      <img class="addon-photo" :alt="availiableAddons" :src="`/${availiableAddons}.jpg`" />
-      <div class="addon-name">{{ availiableAddons }}</div>
-      <div class="addons-list-price"> {{addonPrice}}$</div>
+      <img class="addon-photo" :alt="availiableAddons.name" :src="`/${availiableAddons.name}.jpg`" />
+      <div class="addon-name">{{ availiableAddons.name }}</div>
+      <div class="addons-list-price"> {{availiableAddons.price}}$</div>
       <div class="summ-for-one-addon-type"></div>
       <button @click="increase" class="increase-but">
         <div class="plus">
@@ -32,8 +32,7 @@ export default {
     props: ["availiableAddons"],
     data() {
       return {
-        optedAddons: { name: null, number: 0 },
-        addonPrice: 1,
+        optedAddons: { name: null, number: 0, price: this.availiableAddons.price },
         totalNumber: 0,
       }
     },
@@ -43,7 +42,7 @@ export default {
        decrease: function(){
         if (this.totalNumber > 0) {
            this.totalNumber--;
-           this.optedAddons.name = this.availiableAddons;
+           this.optedAddons.name = this.availiableAddons.name;
            this.optedAddons.number = this.totalNumber;
            this.$emit('decreaseNumbers', this.optedAddons);
         }          
@@ -51,23 +50,28 @@ export default {
        
        increase: function () {
         // "it's necessary to limit amount of addons"
+        if (this.optedAddons.number < 5){
           this.totalNumber++;
-          this.optedAddons.name = this.availiableAddons;
-           this.optedAddons.number = this.totalNumber;
-          this.$emit('increaseNumbers', this.optedAddons)
+          this.optedAddons.name = this.availiableAddons.name;
+          this.optedAddons.number = this.totalNumber;
+          this.$emit('increaseNumbers', this.optedAddons);
+        } else {
+          //we need to show user some message about limit of addons
+        }
+          
        },
        //it controls reset of properties from parent element
        resetValue: function() {
         this.totalNumber = 0;
-        this.optedAddons = { name: null, number: 0 };
+        this.optedAddons = { name: null, number: 0, price: this.availiableAddons.price };
         this.$emit('resetOptedAddons', this.availiableAddons);
        }
 
     },
-    
+    //we don't need it
     computed: {
       computedTotalNumber: function() {
-        return this.totalNumber;
+        return this.availiableAddons.price * this.totalNumber;
       }
     }
   }

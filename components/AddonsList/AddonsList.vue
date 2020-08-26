@@ -3,7 +3,6 @@
     <div class="addons-up-block">
       <div class="addons-header">
         <h4>Here you may opt some extra addons</h4>
-        <div><i>(each extra addons cost {{addonPrice}}$)</i></div>
       </div>
       <div class="remove-button-wrapper">
         <div @click="closeAddonsWithoutSaving()" class="remove-button" >
@@ -62,6 +61,8 @@
       },
 
       closeAddonsWithoutSaving: function(){
+        this.$emit('discardAddonsPrice', this.totalPrice);
+        
         this.$refs.AddonElement.forEach(function(elem) {
           elem.resetValue();
         })
@@ -71,25 +72,21 @@
       },
 
       decreaseNumbers: function(value) {
-        if (this.totalAddonNumbers > 0) {
-          console.log(value)
+        if (value.number >= 0) {
           this.optedAddons[value.name] -= 1;
-          this.totalAddonNumbers--;
-          this.countAddonPrice();
-          this.$emit('subtractFromPrice', value);
+          this.countAddonPrice(-value.price);
+          this.$emit('subtractFromPrice', -value.price);
         }  
       },
 
       increaseNumbers: function(value) {
-        console.log(value)
-        this.optedAddons[value.name] += 1;
-        this.totalAddonNumbers++;
-        this.countAddonPrice();
-        this.$emit('addToPrice', value);
+        this.optedAddons = value;//should get it from store
+        this.countAddonPrice(value.price);
+        this.$emit('addToPrice', value.price);
       },
 
-      countAddonPrice: function() {
-        this.totalPrice = this.addonPrice * this.totalAddonNumbers;
+      countAddonPrice: function(addonsCost) {
+        this.totalPrice += addonsCost;
       },
 
       fillOptedAddonsDefaultState: function(value){

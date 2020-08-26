@@ -22,14 +22,15 @@ export const mutations = {
     state.pizzaUnit.pizzaType = text;
   },
   changePizzaExtraAddons (state, text) {
-    state.pizzaUnit.extraAddons.push({
-        text
-    })
+    state.pizzaUnit.extraAddons = text;
+  },
+  changePizzaExtraAddonsQuantity(state, text) {
+    // when user desidet to increase number of addons after pressing button "apply"???
   },
   changePizzaExcludedIngredients (state, text) {
-    state.pizzaUnit.excludedIngredients.push({
-        text
-    })
+
+    // console.log(text)
+    state.pizzaUnit.excludedIngredients = text;
   },
   increaseQuantity (state, text) {
     state.pizzaUnit.quantity++;
@@ -42,7 +43,14 @@ export const mutations = {
     state.pizzaUnit.totalPrice = text;
   },
   //while impact on pizza cost with additional ingredients
-  changeTotalPrice (state, text) {
+  addToTotalPrice (state, text) {
     state.pizzaUnit.totalPrice +=text;
+  },
+  subtractFromTotalPrice (state, text) {
+    state.pizzaUnit.totalPrice -=text;
+  },
+  discardAddonsPrice (state, text) {
+    console.log(text);
+    state.pizzaUnit.totalPrice -= text;
   }
 }

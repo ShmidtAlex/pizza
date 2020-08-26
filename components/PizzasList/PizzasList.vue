@@ -20,7 +20,11 @@
   let pizzasData = [
     {
       name: 'Italian with mozzarella and pepperoni',
-      addons: ['mushrooms', 'pepperoni', 'mozzarella'],
+      addons: [
+        { name: 'mushrooms', price: 0.5 },
+        { name: 'pepperoni', price: 1 },
+        { name: 'mozzarella', price: 0.75 } 
+      ],
       description: 'Traditional Italian recipe with two types of cheese: grated Mozzarella and classic chillegini; spicy pepperoni, mushrooms and blend of seasonings',
       nutrition: {
         title: 'Nutrition information per 100g', protein: 13, fats: 9, carbohydrates: 37, energy: [280, 1170]
@@ -44,7 +48,10 @@
     },
     {
       name: 'Pizza with red fish',
-      addons: ['tomatoes', 'mozzarella'],
+      addons: [
+        { name: 'tomatoes', price: 0.5 },
+        { name: 'mozzarella', price: 0.75 } 
+      ],
       description: 'The long-awaited pizza! Fresh taste! Bold mix of salmon fish with mozzarella cheese, cream cheese and tomatoes',
       nutrition: {
         title: 'Nutrition information per 100g', protein: 14, fats: 10, carbohydrates: 42, energy: [310, 1300]
@@ -56,7 +63,9 @@
     },
     {
       name: 'Chicken blue cheese',
-      addons: ['chicken breast'],
+      addons: [
+        { name: 'chicken breast', price: 1 }
+      ],
       description: 'Perfect combination: tender chicken fillet with blue cheese crumbles, Parmeggiano sauce, mix of Italian cheeses and Mozzarella cheese.',
       nutrition: {
         title: 'Nutrition information per 100g', protein: 13, fats: 13, carbohydrates: 36, energy: [310, 1300]
@@ -69,6 +78,12 @@
     {
       name: 'Favorite Carbonara',
       addons: ['tomatoes', 'onion', 'bacon', 'mozzarella'],
+      addons: [
+        { name: 'tomatoes', price: 0.5 },
+        { name: 'onion', price: 0.5 },
+        { name: 'bacon', price: 1 },
+        { name: 'mozzarella', price: 0.75 } 
+      ],
       description: 'Classic favorite recipe: crispy bacon, cream cheese, juicy tomatoes, onions, Mozzarella and Italian herbs blend.\n',
       nutrition: {
         title: 'Nutrition information per 100g', protein: 11, fats: 8, carbohydrates: 35, energy: [260, 1090]
@@ -80,7 +95,12 @@
     },
     {
       name: 'Chicken BBQ',
-      addons: ['onions', 'bacon', 'mozzarella', 'chicken breast'],
+      addons: [
+        { name: 'chicken breast', price: 1 },
+        { name: 'onion', price: 0.5 },
+        { name: 'bacon', price: 1 },
+        { name: 'mozzarella', price: 0.75 } 
+      ],
       description: 'Juicy chicken fillet and crispy bacon combined with signature tomato sauce, Mozzarella and onion.',
       nutrition: {
         title: 'Nutrition information per 100g', protein: 11, fats: 7, carbohydrates: 37, energy: [260, 1090]
@@ -91,7 +111,10 @@
     },
     {
       name: 'Pepperoni',
-      addons: ['pepperoni', 'mozzarella'],
+      addons: [
+        { name: 'pepperoni', price: 1 },
+        { name: 'mozzarella', price: 0.75 } 
+      ],
       description: 'American classic with spicy pepperoni, Mozzarella and signature tomato sauce.',
       nutrition: {
         title: 'Nutrition information per 100g', protein: 15, fats: 12, carbohydrates: 43, energy: [340, 1470]
@@ -104,6 +127,11 @@
     {
       name: 'Margherita',
       addons: ['oregano', 'tomatoes', 'mozzarella'],
+      addons: [
+        { name: 'oregano', price: 0.5 },
+        { name: 'tomatoes', price: 0.5 },
+        { name: 'mozzarella', price: 0.75 } 
+      ],
       description: 'Traditional recipe with signature tomato sauce, Mozzarella, oregano and juicy tomatoes.',
       nutrition: {
         title: 'Nutrition information per 100g', protein: 13, fats: 9, carbohydrates: 37, energy: [280, 1170]
@@ -116,6 +144,11 @@
     {
       name: 'Hawaiian',
       addons: ['ham', 'pineapples', 'mozzarella'],
+      addons: [
+        { name: 'ham', price: 1 },
+        { name: 'pineapples', price: 1 },
+        { name: 'mozzarella', price: 0.75 } 
+      ],
       description: 'Tropical classic with flavorful ham, tomato sauce and Mozzarella combined with pineapple bits.',
       nutrition: {
         title: 'Nutrition information per 100g', protein: 11, fats: 6, carbohydrates: 39, energy: [250, 1070]
