@@ -196,18 +196,18 @@ export default {
 
     nestOptedAddons: function(value) {
       this.addonsStatus = true;
-      // this.finalObject.extraAddons = value; 
+      this.finalObject.extraAddons = value; 
       this.$store.commit('pizzaUnit/changePizzaExtraAddons', value)  
     },
 
     addAddonToPrice: function(value) {
-      this.finalObject.totalPrice +=value.price;
-      this.$store.commit('pizzaUnit/addToTotalPrice', value.price)
+      this.finalObject.totalPrice +=value;
+      this.$store.commit('pizzaUnit/addToTotalPrice', value)
     },
 
     subtractAddonFromPrice: function(value) {
       this.finalObject.totalPrice -=value;
-      this.$store.commit('pizzaUnit/subtractFromTotalPrice', -value.price);
+      this.$store.commit('pizzaUnit/subtractFromTotalPrice', -value);
     },
     //it checks, if there is removed ingredient in early opted addons/ if there is, remove it from addons first
     checkExtraAddons: function(value){

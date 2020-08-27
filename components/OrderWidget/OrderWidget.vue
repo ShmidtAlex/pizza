@@ -37,8 +37,8 @@
                 <div class="header">Addition ingredients:</div>
                 <div else class="extra-addons">                  
                   <div class="addon" v-for="(addon, addonKey) in unit.text.extraAddons" :key="addonKey">
-                    <div v-if="addon > 0" class="name">{{addonKey}} + </div>
-                    <div v-if="addon > 0" clas="quantity"> {{addon}}</div>
+                    <div v-if="addon.number > 0" clas="quantity"> {{ addon.name }} + </div>
+                    <div v-if="addon.number > 0" clas="quantity"> {{ addon.number }}</div>
                   </div>
                   <!-- {{unit.text.extraAddons}} -->
                 </div>

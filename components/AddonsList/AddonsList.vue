@@ -37,6 +37,8 @@
   
 </template>
 <script>
+  //purpose of this component - transfer optedAddons value (array of opted addons) to parent component (PizzaUnit)
+  //and also transfer total price of all opted addons to PizzaUnit
   import AddonElement from '~/components/AddonElement/AddonElement.vue'
   export default {
     props: ["addonsList"],
@@ -47,6 +49,7 @@
       return {
         availiableAddons: this.addonsList,
         optedAddons: [],
+        valueNames: [],
         addonPrice: 1,
         totalPrice: 0,
       }
@@ -65,12 +68,14 @@
         this.$refs.AddonElement.forEach(function(elem) {
           elem.resetValue();
         })
+        this.optedAddons = [];
         this.totalPrice = 0;
         this.$emit('closeAddonsList', false);
         this.$emit('clearAddonsPrice', false);
       },
 
       decreaseNumbers: function(value) {
+        //it should work like an icrease function
         if (value.number >= 0) {
           // this.optedAddons = this.optedAddons
           this.optedAddons[value.name] -= 1;
@@ -80,9 +85,30 @@
       },
 
       increaseNumbers: function(value) {
-        this.optedAddons.push(value);//should get it from store
+        if (this.valueNames.includes(value.name)){
+          this.optedAddons.forEach(function(elem){
+            if (elem.name === value.name){
+              console.log(elem.name, value.name);
+              // elem.number++;
+              return;
+            }
+          })
+        } else {
+          this.optedAddons.push(value);
+        }
+        this.checkIfAddonsAlreadyExists(value);
         this.countAddonPrice(value.price);
-        this.$emit('addToPrice', value);
+        
+      },
+
+      checkIfAddonsAlreadyExists: function(value) {
+        if (this.valueNames.includes(value.name)) {
+          console.log('already exists');
+          return;
+        } else {
+          console.log('not exists, added');
+          this.valueNames.push(value.name);
+        }
       },
 
       countAddonPrice: function(addonsCost) {
@@ -105,7 +131,8 @@
       },
 
       applyAddons: function() {
-        this.$emit('summaryOptedAddons', this.optedAddons);//don't work properly, add to store only last addon
+        this.$emit('addToPrice', this.totalPrice);
+        this.$emit('summaryOptedAddons', this.optedAddons);
         this.closeAddons();
       }   
 
