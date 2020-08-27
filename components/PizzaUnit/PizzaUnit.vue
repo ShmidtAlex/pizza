@@ -80,6 +80,7 @@
         @addToPrice="addAddonToPrice"
         @subtractFromPrice="subtractAddonFromPrice"
         @discardAddonsPrice="discardAddonPriceInStore"
+        @clearAddonsPrice="clearAddonPriceInFinalObj"
         ref="AddonsList"
         />
     </div>
@@ -200,13 +201,13 @@ export default {
     },
 
     addAddonToPrice: function(value) {
-      this.finalObject.totalPrice +=value;
-      this.$store.commit('pizzaUnit/addToTotalPrice', value)
+      this.finalObject.totalPrice +=value.price;
+      this.$store.commit('pizzaUnit/addToTotalPrice', value.price)
     },
 
     subtractAddonFromPrice: function(value) {
       this.finalObject.totalPrice -=value;
-      this.$store.commit('pizzaUnit/subtractFromTotalPrice', value);
+      this.$store.commit('pizzaUnit/subtractFromTotalPrice', -value.price);
     },
     //it checks, if there is removed ingredient in early opted addons/ if there is, remove it from addons first
     checkExtraAddons: function(value){
@@ -259,6 +260,12 @@ export default {
         this.$store.commit('pizzaUnit/discardAddonsPrice', value);
       }
       
+    },
+    clearAddonPriceInFinalObj: function(value) {
+      let runningVal = this.finalObject.totalPrice;
+      if (value === false && runningVal > this.defaultObject.totalPrice) {
+        this.finalObject.totalPrice = this.defaultObject.totalPrice;
+      }
     }
   },
   computed: {

@@ -21,7 +21,7 @@
           </div>
         </button> 
       </div>
-      <div class="total-number">{{ totalNumber }} position<span v-if="totalNumber > 1">s</span></div>
+      <div class="total-number">{{ optedAddons.number }} position<span v-if="optedAddons.number > 1">s</span></div>
       
     </div>    
   </div>
@@ -41,19 +41,16 @@ export default {
 
        decrease: function(){
         if (this.totalNumber > 0) {
-           this.totalNumber--;
            this.optedAddons.name = this.availiableAddons.name;
-           this.optedAddons.number = this.totalNumber;
+           this.optedAddons.number--;
            this.$emit('decreaseNumbers', this.optedAddons);
         }          
        },
        
        increase: function () {
-        // "it's necessary to limit amount of addons"
-        if (this.optedAddons.number < 5){
-          this.totalNumber++;
+        if (this.optedAddons.number < 3){
           this.optedAddons.name = this.availiableAddons.name;
-          this.optedAddons.number = this.totalNumber;
+          this.optedAddons.number++;
           this.$emit('increaseNumbers', this.optedAddons);
         } else {
           //we need to show user some message about limit of addons
@@ -62,7 +59,6 @@ export default {
        },
        //it controls reset of properties from parent element
        resetValue: function() {
-        this.totalNumber = 0;
         this.optedAddons = { name: null, number: 0, price: this.availiableAddons.price };
         this.$emit('resetOptedAddons', this.availiableAddons);
        }
@@ -70,9 +66,9 @@ export default {
     },
     //we don't need it
     computed: {
-      computedTotalNumber: function() {
-        return this.availiableAddons.price * this.totalNumber;
-      }
+      // computedTotalNumber: function() {
+      //   return this.availiableAddons.price * this.totalNumber;
+      // }
     }
   }
 

@@ -46,10 +46,9 @@
     data() {
       return {
         availiableAddons: this.addonsList,
-        optedAddons: {},
+        optedAddons: [],
         addonPrice: 1,
         totalPrice: 0,
-        totalAddonNumbers: 0
       }
     },
     mounted() {
@@ -60,29 +59,30 @@
         this.$emit('closeAddonsList', false);        
       },
 
-      closeAddonsWithoutSaving: function(){
+      closeAddonsWithoutSaving: function() {
         this.$emit('discardAddonsPrice', this.totalPrice);
         
         this.$refs.AddonElement.forEach(function(elem) {
           elem.resetValue();
         })
-        this.totalAddonNumbers = 0;
         this.totalPrice = 0;
         this.$emit('closeAddonsList', false);
+        this.$emit('clearAddonsPrice', false);
       },
 
       decreaseNumbers: function(value) {
         if (value.number >= 0) {
+          // this.optedAddons = this.optedAddons
           this.optedAddons[value.name] -= 1;
           this.countAddonPrice(-value.price);
-          this.$emit('subtractFromPrice', -value.price);
+          this.$emit('subtractFromPrice', value);
         }  
       },
 
       increaseNumbers: function(value) {
-        this.optedAddons = value;//should get it from store
+        this.optedAddons.push(value);//should get it from store
         this.countAddonPrice(value.price);
-        this.$emit('addToPrice', value.price);
+        this.$emit('addToPrice', value);
       },
 
       countAddonPrice: function(addonsCost) {
