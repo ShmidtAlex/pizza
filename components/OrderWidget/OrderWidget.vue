@@ -35,7 +35,7 @@
                 </div>
                 <div v-if="unit.text.extraAddons === {}" class="extra-addons">with no addons</div>
                 <div class="header">Addition ingredients:</div>
-                <div else class="extra-addons">                  
+                <div else class="extra-addons">      
                   <div class="addon" v-for="(addon, addonKey) in unit.text.extraAddons" :key="addonKey">
                     <div v-if="addon.number > 0" clas="quantity"> {{ addon.name }} + </div>
                     <div v-if="addon.number > 0" clas="quantity"> {{ addon.number }}</div>

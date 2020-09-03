@@ -12,6 +12,7 @@
               @showAddonsList="showFeature"
               @removeIngredientFromOrder="checkExtraAddons" 
               @setupRemovingIngredient="setUpRemoving"
+              @increaseAddonsNumber="increaseAddonsNumberInStore"
               />
              
     </div>
@@ -81,6 +82,7 @@
         @subtractFromPrice="subtractAddonFromPrice"
         @discardAddonsPrice="discardAddonPriceInStore"
         @clearAddonsPrice="clearAddonPriceInFinalObj"
+        @decreaseAddonsNumberInStore="decreaseAddonsNumberInStore"
         ref="AddonsList"
         />
     </div>
@@ -206,8 +208,20 @@ export default {
     },
 
     subtractAddonFromPrice: function(value) {
-      this.finalObject.totalPrice -=value;
-      this.$store.commit('pizzaUnit/subtractFromTotalPrice', -value);
+      if (this.finalObject.totalPrice > this.defaultObject.totalPrice){
+        this.finalObject.totalPrice -=value;
+        this.$store.commit('pizzaUnit/subtractFromTotalPrice', -value);
+      }
+      
+    },
+
+    decreaseAddonsNumberInStore: function(value) {
+      this.$store.commit('pizzaUnit/decreaseAddonsNumber', value);
+    },
+
+    increaseAddonsNumberInStore: function(value) {
+      console.log('it works');
+      this.$store.commit('pizzaUnit/increaseAddonsNumber', value);//we need that after removing of extra addons user should have possibility to add addons again
     },
     //it checks, if there is removed ingredient in early opted addons/ if there is, remove it from addons first
     checkExtraAddons: function(value){
@@ -219,7 +233,6 @@ export default {
           this.addExcludedIngredients(value);
         }
       } else {
-        // console.log('this finalObject = ', this.finalObject.excludedIngredients);
         this.addExcludedIngredients(value);
         this.setUpRemoving(value);
         return;
@@ -233,8 +246,7 @@ export default {
         excluded.push(ingredientName)
        // let localArray = this.finalObject.excludedIngredients;
         this.$store.commit('pizzaUnit/changePizzaExcludedIngredients', excluded);
-      }
-      
+      }       
     },
 
     //it will check, if there is addon ingredient in early removed ingredients

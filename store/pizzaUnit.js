@@ -46,11 +46,28 @@ export const mutations = {
   addToTotalPrice (state, text) {
     state.pizzaUnit.totalPrice +=text;
   },
+  //actually, we don't need substract from stored value, because of adding happened only if user press button 'apply' after choosing addons.
+  // otherwise, only local addons object are changing, and they no casue any changes in store
   subtractFromTotalPrice (state, text) {
     state.pizzaUnit.totalPrice -=text;
   },
   discardAddonsPrice (state, text) {
     console.log(text);
     state.pizzaUnit.totalPrice -= text;
+  },
+  decreaseAddonsNumber (state, text) {
+    state.pizzaUnit.extraAddons.forEach(function(elem){
+        if (elem.name === text.name) {
+            elem.number--;
+        }
+    })
+  },
+  increaseAddonsNumber (state, text) {
+    state.pizzaUnit.extraAddons.forEach(function(elem){
+        console.log(text);
+        if (elem.name = text) {
+            elem.number++;
+        }
+    })
   }
 }

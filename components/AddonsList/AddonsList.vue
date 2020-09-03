@@ -75,24 +75,33 @@
       },
 
       decreaseNumbers: function(value) {
-        //it should work like an icrease function
         if (value.number >= 0) {
-          // this.optedAddons = this.optedAddons
-          this.optedAddons[value.name] -= 1;
           this.countAddonPrice(-value.price);
-          this.$emit('subtractFromPrice', value);
+          this.$emit('subtractFromPrice', value.price);
+          this.$emit('decreaseAddonsNumberInStore', value);
         }  
       },
 
       increaseNumbers: function(value) {
         if (this.valueNames.includes(value.name)){
-          this.optedAddons.forEach(function(elem){
+          //should work but doesnt
+          //  this.optedAddons.forEach(elem => {
+          //   console.log('exact case', elem);
+          //   if (elem.name === value.name){
+          //     console.log("valuename in action", value.name)
+          //     this.$emit('increaseAddonsNumberInStore', value.name);
+          //     return;
+          //   }
+          // });
+          var self = this;
+           self.optedAddons.forEach(function(elem) {
+            console.log('exact case', elem);
             if (elem.name === value.name){
-              console.log(elem.name, value.name);
-              // elem.number++;
+              console.log("valuename in action", value.name)
+              self.$emit('increaseAddonsNumber', value.name);
               return;
             }
-          })
+          });
         } else {
           this.optedAddons.push(value);
         }
@@ -103,10 +112,8 @@
 
       checkIfAddonsAlreadyExists: function(value) {
         if (this.valueNames.includes(value.name)) {
-          console.log('already exists');
           return;
         } else {
-          console.log('not exists, added');
           this.valueNames.push(value.name);
         }
       },
@@ -131,6 +138,8 @@
       },
 
       applyAddons: function() {
+        let optedAddons = Object.assign({}, );
+        let totalPrice = Object.assign({}, );
         this.$emit('addToPrice', this.totalPrice);
         this.$emit('summaryOptedAddons', this.optedAddons);
         this.closeAddons();

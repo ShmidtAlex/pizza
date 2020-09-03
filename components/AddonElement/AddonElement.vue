@@ -40,10 +40,13 @@ export default {
     methods: {
 
        decrease: function(){
-        if (this.totalNumber > 0) {
+        console.log()
+        if (this.optedAddons.number > 0) {
            this.optedAddons.name = this.availiableAddons.name;
            this.optedAddons.number--;
-           this.$emit('decreaseNumbers', this.optedAddons);
+           let optedAddons = Object.assign({}, this.optedAddons);
+           console.log(optedAddons);
+           this.$emit('decreaseNumbers', optedAddons);
         }          
        },
        
@@ -51,7 +54,9 @@ export default {
         if (this.optedAddons.number < 3){
           this.optedAddons.name = this.availiableAddons.name;
           this.optedAddons.number++;
-          this.$emit('increaseNumbers', this.optedAddons);
+          let optedAddons = Object.assign({}, this.optedAddons);
+           console.log(optedAddons);
+          this.$emit('increaseNumbers', optedAddons);
         } else {
           //we need to show user some message about limit of addons
         }
