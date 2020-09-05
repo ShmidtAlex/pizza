@@ -33,9 +33,9 @@
                   </div>
                   {{unit.text.pizzaSize}} cm {{unit.text.pizzaType}}
                 </div>
-                <div v-if="unit.text.extraAddons === {}" class="extra-addons">with no addons</div>
-                <div class="header">Addition ingredients:</div>
-                <div else class="extra-addons">      
+                <div v-if="!unit.text.extraAddons.length" class="extra-addons">with no addons</div>
+                <div v-else class="header">Additional ingredients:</div>
+                <div class="extra-addons">      
                   <div class="addon" v-for="(addon, addonKey) in unit.text.extraAddons" :key="addonKey">
                     <div v-if="addon.number > 0" clas="quantity"> {{ addon.name }} + </div>
                     <div v-if="addon.number > 0" clas="quantity"> {{ addon.number }}</div>

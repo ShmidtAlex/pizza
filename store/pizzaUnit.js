@@ -10,6 +10,8 @@ export const  state = () => ({
         smallImg: ""
       }
 })
+
+
 export const mutations = {
     //this one should initialize object pizzaUnit while user clicks on any part of pizzaUnit and reinitialize, when he clicks any other pizzas
   fillStorePizzaUnit (state, text) {

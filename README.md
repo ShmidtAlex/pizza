@@ -8,29 +8,20 @@ this app is a SPA for ordering pizza. as a prototype used papa Jones.
 
 ## tasks:
 	1. develop sign-in form properly
-	2. correct size pizzas' page while cart part is showed +
 	3. add combo section
-	4. add snakes section
-	5. add salad section
 	6. develop contact us section, bonuses, promotions
 	7. delete german language and location, develop and add russian instead
 	8. ponder mobile schema
 	9. "order now" button doesn't work
-	11. the inner container in order section should contain cart snipper wrapper and positioned as fixed +
-	12. "add ingredients" button doesn't work +
-	13. check if all console.log deleted +
 	14. check if layout has cross-browser support 
 	15. check if used the best practices of vue
 	16. all functions, variables and class/id should have proper and understandable names in one style
-	17. buttons in "addon-element" component should be gradiented. while press on plus - right to left and vice versa.
-	18. addonsList should get from addonElement number and names of choosen addons +
-	19. number of choosen addons should be shown on addonsList component, just like a total cost of all addons +
-	20. adding addons to the finalObject in PizzaUnit component should processed after pressing apply button +
 	21. totalPrice in AddonsList component should be resetted after closing component
 	22. button addToCart in addon section should appears only after removing any addons or shouldn't anyway?
 	23. set impact of removing ingredients on chart and extraAddons field of finalObject
 	24. positions in cart should be interactive and availiable for redacting: removing and adding ingreditents
 	25. while we met difficulties with pushing fullfilled object from addonsList component, we'll create a base order object in vuex and will set it's fields through pizzasList component directly. Next, we'll create new store object, which will store the whole oreder, which will consist from base/modified objects
+	26. кнопка уменьшения ингридиентов не должна влиять на элементы, которые уже находятся в корзине
 
 ## Build Setup
 
