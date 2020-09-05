@@ -14,9 +14,7 @@
                  @collapseSection="collapsePizzasListSection"
       />
     </div>
-    <div v-for="post in posts">
-      {{post.title}}
-    </div>
+    
   </div>
 </template>
 <script>
@@ -64,9 +62,7 @@
       }
     },
     computed: {
-      returnFetch: function () {
-        return this.posts;
-      }
+     
     }
   }
 </script>

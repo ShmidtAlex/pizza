@@ -38,6 +38,9 @@ $ npm run start
 
 # generate static project
 $ npm run generate
+
+#for using fake api find in my repo fakeServerPizza, download and
+$ npm install
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
