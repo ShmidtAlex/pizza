@@ -1,8 +1,9 @@
 <template>
   <div id="pizzas" class="pizzas-list-container" :class="{'pizzas-list-container_collapsed': collapsed}">
-    <div @click="initializePizzaUnitStore(pizza.name)" class="pizza-sort" v-for="(pizza, indexPizza) in pizzaList">
+    <!-- @click="initializePizzaUnitStore(pizza.name)" -->
+    <div  class="pizza-sort" v-for="(pizza, indexPizza) in pizzaList">
       <PizzaUnit :name="pizza.name"
-                 :addons="pizza.addons"
+                 :possibleAddons="pizza.addons"
                  :description="pizza.description"
                  :nutrition="pizza.nutrition"
                  :pastryType="pizza.types"
@@ -28,7 +29,6 @@
     },
     data() {
       return {
-        // pizzaList: [],
         collapsed: false
       }
     },
@@ -42,16 +42,16 @@
         this.collapsed = value;
         this.$emit('getCartState', true)
       },
-      initializePizzaUnitStore: function(name) {
-        let runningName = this.$store.state.pizzaUnit.pizzaUnit.pizzaName;
-        this.$refs.PizzaUnit.forEach(elem => {
-          if (elem.defaultObject.pizzaName === name && runningName !== name) {
-             elem.initializePizzaUnit();
-          } else {
-            return;
-          }         
-        })
-      }
+      // initializePizzaUnitStore: function(name) {
+      //   let runningName = this.$store.state.pizzaUnit.unit.pizzaName;
+      //   this.$refs.PizzaUnit.forEach(elem => {
+      //     if (elem.defaultObject.pizzaName === name && runningName !== name) {
+      //        elem.initializePizzaUnit();
+      //     } else {
+      //       return;
+      //     }         
+      //   })
+      // }
     },
     computed: {
         ...mapGetters({

@@ -63,12 +63,13 @@
       },
 
       closeAddonsWithoutSaving: function() {
-        this.$emit('discardAddonsPrice', this.totalPrice);
+        // this.$emit('discardAddonsPrice', this.totalPrice);
         
         this.$refs.AddonElement.forEach(function(elem) {
           elem.resetValue();
         })
         this.optedAddons = [];
+        this.valueNames = [];
         this.totalPrice = 0;
         this.$emit('closeAddonsList', false);
         this.$emit('clearAddonsPrice', false);
@@ -79,29 +80,23 @@
           this.countAddonPrice(-value.price);
           this.$emit('subtractFromPrice', value.price);
           this.$emit('decreaseAddonsNumberInStore', value);
+          if (this.valueNames.includes(value.name)){
+          this.optedAddons.forEach(elem => {
+            if (elem.name === value.name && elem.number > 0) {
+              elem.number--;
+            }
+          })         
+        }
         }  
       },
 
       increaseNumbers: function(value) {
         if (this.valueNames.includes(value.name)){
-          //should work but doesnt
-          //  this.optedAddons.forEach(elem => {
-          //   console.log('exact case', elem);
-          //   if (elem.name === value.name){
-          //     console.log("valuename in action", value.name)
-          //     this.$emit('increaseAddonsNumberInStore', value.name);
-          //     return;
-          //   }
-          // });
-          var self = this;
-           self.optedAddons.forEach(function(elem) {
-            console.log('exact case', elem);
-            if (elem.name === value.name){
-              console.log("valuename in action", value.name)
-              self.$emit('increaseAddonsNumber', value.name);
-              return;
+          this.optedAddons.forEach(elem => {
+            if (elem.name === value.name && elem.number < 3) {
+              elem.number++;
             }
-          });
+          })         
         } else {
           this.optedAddons.push(value);
         }
@@ -138,8 +133,6 @@
       },
 
       applyAddons: function() {
-        let optedAddons = Object.assign({}, );
-        let totalPrice = Object.assign({}, );
         this.$emit('addToPrice', this.totalPrice);
         this.$emit('summaryOptedAddons', this.optedAddons);
         this.closeAddons();

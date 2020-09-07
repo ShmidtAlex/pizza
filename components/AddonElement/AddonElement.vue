@@ -40,7 +40,6 @@ export default {
     methods: {
 
        decrease: function(){
-        console.log()
         if (this.optedAddons.number > 0) {
            this.optedAddons.name = this.availiableAddons.name;
            this.optedAddons.number--;
@@ -58,7 +57,8 @@ export default {
            console.log(optedAddons);
           this.$emit('increaseNumbers', optedAddons);
         } else {
-          //we need to show user some message about limit of addons
+          //we need to show user some message about limit of addons in proper way, not with alert();
+          alert('maximum addons opted');
         }
           
        },

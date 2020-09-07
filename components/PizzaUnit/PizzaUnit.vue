@@ -4,7 +4,7 @@
       <Addons
               :objectForIngredientManipulations="defaultObject"
               :isShown="showAddons"
-              :addons="addons"
+              :addons="possibleAddons"
               :isAddonListChanged="addonsStatus"
               :excludedIngredients="comutedExcludedIngredients"
               @updateShowAddonsStatus="updateShowAddons"
@@ -18,7 +18,7 @@
     </div>
     <div class="pizza-picture" :style="`background-image: url(${img})`">
         <img :alt="name" :src="img">
-        <div v-if="addons.length"class="addon-list-wrapper">
+        <div v-if="possibleAddons.length"class="addon-list-wrapper">
           <button @click="showAddonInUnit" class="addon-list">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 16 12">
               <path fill="currentColor" fill-rule="evenodd" d="M1 0h14a1 1 0 0 1 0 2H1a1 1 0 0 1 0-2zm2 5h10a1 1 0 0 1 0 2H3a1 1 0 0 1 0-2zm2 5h6a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2z"></path>
@@ -75,7 +75,7 @@
     </div>
     <div class="addonOptions" :class="{showedAddons: showAddonOptions}">
       <AddonsList 
-        :addonsList="addons" 
+        :addonsList="possibleAddons" 
         @summaryOptedAddons="nestOptedAddons" 
         @closeAddonsList="showFeature"
         @addToPrice="addAddonToPrice"
@@ -99,7 +99,7 @@ export default {
     Addons,
     AddonsList
   },
-  props: ['name', 'addons', 'description', 'nutrition', 'pastryType', 'sizes', 'prices', 'img', 'index'],
+  props: ['name', 'possibleAddons', 'description', 'nutrition', 'pastryType', 'sizes', 'prices', 'img', 'index'],
   data() {
     return {
       showAddons: false,
@@ -147,7 +147,7 @@ export default {
         this.initializePizzaUnit();
       }
       this.optedType = value;
-      this.$store.commit('pizzaUnit/changePizzaType', value);
+      // this.$store.commit('pizzaUnit/changePizzaType', value);
     },
 
     changeSize: function(value, size) {
@@ -156,14 +156,14 @@ export default {
       }
       this.sizeIndexValue = value;
       this.priceIndexValue = value;
-      this.$store.commit('pizzaUnit/changePizzaSize', size);
+      // this.$store.commit('pizzaUnit/changePizzaSize', size);
       this.changePrice(value);
     },
 
     changePrice: function(index) {
       let localKey = Object.keys(this.prices)[index];
       this.finalObject.totalPrice = this.prices[localKey];//for adding to order cart
-      this.$store.commit('pizzaUnit/changePizzaPrice', this.prices[localKey]);
+      // this.$store.commit('pizzaUnit/changePizzaPrice', this.prices[localKey]);
     },
 
     showNutritions: function() {
@@ -188,7 +188,7 @@ export default {
       }
       //instead of change local main object every time, when we change something, we will better clone it from vuex state (pizzaUnit.js)
       let clonnedValue = Object.assign({}, this.$store.state.pizzaUnit.pizzaUnit);
-      this.$store.commit('order/add', clonnedValue);
+      // this.$store.commit('order/add', clonnedValue);
       this.finalObject = this.defaultObject;// restore default settings for next unit in order cart
     },
 
@@ -199,29 +199,35 @@ export default {
     nestOptedAddons: function(value) {
       this.addonsStatus = true;
       this.finalObject.extraAddons = value; 
-      this.$store.commit('pizzaUnit/changePizzaExtraAddons', value)  
+      // this.$store.commit('pizzaUnit/changePizzaExtraAddons', value)  
     },
 
     addAddonToPrice: function(value) {
       this.finalObject.totalPrice +=value;
-      this.$store.commit('pizzaUnit/addToTotalPrice', value)
+      // this.$store.commit('pizzaUnit/addToTotalPrice', value)
     },
 
     subtractAddonFromPrice: function(value) {
       if (this.finalObject.totalPrice > this.defaultObject.totalPrice){
         this.finalObject.totalPrice -=value;
-        this.$store.commit('pizzaUnit/subtractFromTotalPrice', -value);
+        // this.$store.commit('pizzaUnit/subtractFromTotalPrice', -value);
       }
       
     },
 
     decreaseAddonsNumberInStore: function(value) {
-      this.$store.commit('pizzaUnit/decreaseAddonsNumber', value);
+      // this.$store.commit('pizzaUnit/decreaseAddonsNumber', value);
     },
 
     increaseAddonsNumberInStore: function(value) {
       console.log('it works');
-      this.$store.commit('pizzaUnit/increaseAddonsNumber', value);//we need that after removing of extra addons user should have possibility to add addons again
+      this.finalObject.forEach(elem => {
+        console.log(elem)
+        if (elem.name === value) {
+          elem.number++;
+        }
+      })
+      // this.$store.commit('pizzaUnit/increaseAddonsNumber', value);//we need that after removing of extra addons user should have possibility to add addons again
     },
     //it checks, if there is removed ingredient in early opted addons/ if there is, remove it from addons first
     checkExtraAddons: function(value){
@@ -245,7 +251,7 @@ export default {
       if (!excluded.includes(ingredientName)){
         excluded.push(ingredientName)
        // let localArray = this.finalObject.excludedIngredients;
-        this.$store.commit('pizzaUnit/changePizzaExcludedIngredients', excluded);
+        // this.$store.commit('pizzaUnit/changePizzaExcludedIngredients', excluded);
       }       
     },
 
@@ -263,13 +269,13 @@ export default {
     initializePizzaUnit: function() {
       this.storeInitialized = true;
       let clonedDefaultObject = Object.assign({}, this.defaultObject);
-      this.$store.commit('pizzaUnit/fillStorePizzaUnit', clonedDefaultObject);
+      // this.$store.commit('pizzaUnit/fillStorePizzaUnit', clonedDefaultObject);
     },
 
     discardAddonPriceInStore: function(value) {
       let runningVal = this.$store.state.pizzaUnit.pizzaUnit.totalPrice;
       if(runningVal > this.defaultObject.totalPrice) {
-        this.$store.commit('pizzaUnit/discardAddonsPrice', value);
+        // this.$store.commit('pizzaUnit/discardAddonsPrice', value);
       }
       
     },

@@ -22,6 +22,8 @@ this app is a SPA for ordering pizza. as a prototype used papa Jones.
 	24. positions in cart should be interactive and availiable for redacting: removing and adding ingreditents
 	25. while we met difficulties with pushing fullfilled object from addonsList component, we'll create a base order object in vuex and will set it's fields through pizzasList component directly. Next, we'll create new store object, which will store the whole oreder, which will consist from base/modified objects
 	26. кнопка уменьшения ингридиентов не должна влиять на элементы, которые уже находятся в корзине
+	27. actually, we don't need any default unit in pizzaUnit store module, we need this pre-filled from availablePizzasList units, own unit in each of created PizzaUnit components. It should be changed locally, in component and also should be pushed to order store module directly
+	28. remove all rudimentary and legacy code
 
 ## Build Setup
 
