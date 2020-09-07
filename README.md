@@ -41,6 +41,7 @@ $ npm run generate
 
 #for using fake api find in my repo fakeServerPizza, download and
 $ npm install
+$ npm run jsons:server
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
