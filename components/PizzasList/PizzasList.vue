@@ -21,28 +21,20 @@
   
   import PizzaUnit from '../PizzaUnit/PizzaUnit.vue';
   import { mapMutations } from 'vuex';
+  import { mapGetters } from 'vuex';
   export default {
     components: {
       PizzaUnit,
     },
-
-
-
     data() {
       return {
-        pizzaList: [],
+        // pizzaList: [],
         collapsed: false
       }
     },
     
    mounted() {
-    //to get access to this fake api, you need "run npm json:server" in "JSONSERVER" folder
-      fetch('http://localhost:3004/pizzasList')
-        .then(response => {
-          response.json().then(list => {
-            this.pizzaList = list;
-          })
-        })
+    this.$store.dispatch('pizzaUnit/getAvailablePizzas');
    },
 
     methods: {
@@ -62,7 +54,9 @@
       }
     },
     computed: {
-     
+        ...mapGetters({
+        pizzaList: 'pizzaUnit/availablePizzasList'
+      })
     }
   }
 </script>

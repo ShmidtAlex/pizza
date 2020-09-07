@@ -1,19 +1,48 @@
 export const  state = () => ({
   pizzaUnit: {
-        pizzaName: "",
-        pizzaSize: "",
-        pizzaType: "",
-        extraAddons: [],
-        excludedIngredients: [],
-        quantity: 1,
-        totalPrice: 0,
-        smallImg: ""
-      }
+      pizzaName: "",
+      pizzaSize: "",
+      pizzaType: "",
+      extraAddons: [],
+      excludedIngredients: [],
+      quantity: 1,
+      totalPrice: 0,
+      smallImg: ""
+    },
+  availablePizzasList: []  
 })
 
+export const actions = {
+  async getAvailablePizzas(context) {
+    fetch('http://localhost:3004/pizzasList')
+      .then(response => {
+      response.json().then(list => {
+        context.commit('setPizzas', list);
+      })
+    })
+    
+  },
+  getAvailablePizzas(context) {
+    fetch('http://localhost:3004/pizzasList')
+      .then(response => {
+      response.json().then(list => {
+        context.commit('setPizzas', list);
+      })
+    })
+    
+  },
+}
+export const getters = {
+  availablePizzasList(state) {
+    return state.availablePizzasList;
+  }
+}
 
 export const mutations = {
-    //this one should initialize object pizzaUnit while user clicks on any part of pizzaUnit and reinitialize, when he clicks any other pizzas
+  setPizzas (state, text) {
+    state.availablePizzasList = text;
+  },
+  //this one should initialize object pizzaUnit while user clicks on any part of pizzaUnit and reinitialize, when he clicks any other pizzas
   fillStorePizzaUnit (state, text) {
       state.pizzaUnit = text;
   },
