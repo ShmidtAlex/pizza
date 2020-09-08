@@ -42,16 +42,6 @@
         this.collapsed = value;
         this.$emit('getCartState', true)
       },
-      // initializePizzaUnitStore: function(name) {
-      //   let runningName = this.$store.state.pizzaUnit.unit.pizzaName;
-      //   this.$refs.PizzaUnit.forEach(elem => {
-      //     if (elem.defaultObject.pizzaName === name && runningName !== name) {
-      //        elem.initializePizzaUnit();
-      //     } else {
-      //       return;
-      //     }         
-      //   })
-      // }
     },
     computed: {
         ...mapGetters({

@@ -67,14 +67,7 @@ export default {
         this.optedAddons = { name: null, number: 0, price: this.availiableAddons.price };
         this.$emit('resetOptedAddons', this.availiableAddons);
        }
-
-    },
-    //we don't need it
-    computed: {
-      // computedTotalNumber: function() {
-      //   return this.availiableAddons.price * this.totalNumber;
-      // }
-    }
+    },    
   }
 
 </script>
